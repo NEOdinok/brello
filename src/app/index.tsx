@@ -1,3 +1,5 @@
+import "@/app/styles/index.css";
+
 export function App() {
   return (
     <>
