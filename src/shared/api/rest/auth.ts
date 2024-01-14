@@ -31,7 +31,11 @@ export const signInWithEmail = createEffect<{ email: Email }, void, AuthError>(
   }
 );
 
-export const getMe = createEffect<void, void, AuthError>(async () => {
+export const getMe = createEffect<
+  void,
+  { id: string; email: string } | null,
+  AuthError
+>(async () => {
   const {
     data: { user },
     error,
