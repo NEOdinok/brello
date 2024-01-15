@@ -15,8 +15,6 @@
   "dependencies": {
     "@effector/reflect": "^8.3.1",
     "@supabase/supabase-js": "2.39.3",
-    "classnames": "^2.5.1",
-    "clsx": "2.1.0",
     "effector": "22.8.6",
     "effector-react": "22.5.3",
     "modern-normalize": "^2.0.0",
@@ -47,6 +45,8 @@
     "stylelint-config-standard": "^33.0.0",
     "typescript": "^5.2.2",
     "vite": "^4.5.1",
-    "vite-plugin-svgr": "^3.2.0"
+    "vite-plugin-svgr": "^3.2.0",
+    "classnames": "^2.5.1",
+    "clsx": "2.1.0"
   }
 }
