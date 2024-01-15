@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  width: 56px;
+  height: 56px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 28px;
+  border: 10px solid var(--featured-icon-border, var(--color-primary-50));
+  background: var(--featured-icon-background, var(--color-primary-100));
+  color: var(--featured-icon-color, var(--color-primary-600));
+}
+
+.container {
+  fill: var(--featured-icon-color);
+  width: 24px;
+  height: 24px;
+}
+
+.color-primary {
+  --featured-icon-border: var(--color-primary-50);
+  --featured-icon-background: var(--color-primary-100);
+  --featured-icon-color: var(--color-primary-600);
+}
+
+.color-error {
+  --featured-icon-border: var(--color-error-50);
+  --featured-icon-background: var(--color-error-100);
+  --featured-icon-color: var(--color-error-600);
+}
