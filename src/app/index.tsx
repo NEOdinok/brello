@@ -1,9 +1,10 @@
 import "@/app/styles/index.css";
+import { SignInPage } from "@/pages/auth/sign-in";
 
 export function App() {
   return (
     <>
-      <h1>Gosha Brello</h1>
+      <SignInPage />
     </>
   );
 }
