@@ -12,7 +12,7 @@ export const backToLoginClicked = createEvent();
 
 export const $email = createStore("");
 export const $error = createStore<SignInError | null>(null);
-export const $pending = createStore(false);
+export const $pending = signInFx.pending;
 export const $finished = createStore(false);
 
 $email.on(emailChanged, (_, email) => email);
