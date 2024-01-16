@@ -12,35 +12,28 @@ export interface User {
   email: Email;
 }
 
-export const signInWithEmailFx = createEffect<
-  { email: Email },
-  void,
-  AuthError
->(async ({ email }) => {
-  console.log({ email });
-  return;
-});
-
 const checkError = (error: AuthError | null) => {
   if (error) {
     throw error;
   }
 };
 
-export const signInWithEmail = createEffect<{ email: Email }, void, AuthError>(
-  async ({ email }) => {
-    const { error } = await client.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: SITE_URL,
-      },
-    });
+export const signInWithEmailFx = createEffect<
+  { email: Email },
+  void,
+  AuthError
+>(async ({ email }) => {
+  const { error } = await client.auth.signInWithOtp({
+    email,
+    options: {
+      emailRedirectTo: SITE_URL,
+    },
+  });
 
-    checkError(error);
-  }
-);
+  checkError(error);
+});
 
-export const getMe = createEffect<
+export const getMeFx = createEffect<
   void,
   { id: string; email: string } | null,
   AuthError
@@ -62,7 +55,7 @@ export const getMe = createEffect<
   return null;
 });
 
-export const signOut = createEffect<void, void, AuthError>(async () => {
+export const signOutFx = createEffect<void, void, AuthError>(async () => {
   const { error } = await client.auth.signOut();
 
   checkError(error);
