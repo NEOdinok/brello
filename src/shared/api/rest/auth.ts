@@ -60,3 +60,13 @@ export const signOutFx = createEffect<void, void, AuthError>(async () => {
 
   checkError(error);
 });
+
+export const signInWithGoogleFx = createEffect<void, void, AuthError>(
+  async () => {
+    const { error } = await client.auth.signInWithOAuth({
+      provider: "github",
+    });
+
+    checkError(error);
+  }
+);
