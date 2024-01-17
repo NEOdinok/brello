@@ -5,7 +5,7 @@ import { sample } from "effector";
 import { appStarted } from "../init";
 import { debug } from "patronum";
 
-export { routes } from "./routes";
+export { routes, pageNotFoundRoute } from "./routes";
 
 export const controls = createRouterControls();
 
