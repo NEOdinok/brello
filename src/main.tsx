@@ -1,8 +1,11 @@
 import ReactDOM from "react-dom/client";
-import { App } from "@/app";
 import { appStarted } from "./shared/init";
 import { allSettled, fork } from "effector";
 import { Provider } from "effector-react";
+import { RouterProvider } from "atomic-router-react";
+
+import { Application } from "@/app";
+import { router } from "@/shared/routing";
 
 const root = document.getElementById("root") as HTMLElement;
 
@@ -14,6 +17,8 @@ allSettled(appStarted, { scope }).catch(() =>
 
 ReactDOM.createRoot(root).render(
   <Provider value={scope}>
-    <App />
+    <RouterProvider router={router}>
+      <Application />
+    </RouterProvider>
   </Provider>
 );
