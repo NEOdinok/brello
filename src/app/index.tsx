@@ -1,10 +1,6 @@
 import "@/app/styles/index.css";
-import { SignInPage } from "@/pages/auth/sign-in/page";
+import { Pages } from "@/pages";
 
 export function Application() {
-  return (
-    <>
-      <SignInPage />
-    </>
-  );
+  return <Pages />;
 }
