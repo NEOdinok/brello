@@ -12,11 +12,11 @@ dependencies:
     specifier: 2.39.3
     version: 2.39.3
   atomic-router:
-    specifier: 0.9.4
-    version: 0.9.4(effector@22.8.6)(history@5.3.0)
+    specifier: ^0.8.0
+    version: 0.8.0(effector@22.8.6)(history@5.3.0)
   atomic-router-react:
-    specifier: 0.9.1
-    version: 0.9.1(atomic-router@0.9.4)(effector-react@22.5.3)(effector@22.8.6)(react@18.2.0)
+    specifier: 0.8.5
+    version: 0.8.5(atomic-router@0.8.0)(effector-react@22.5.3)(effector@22.8.6)(react@18.2.0)
   effector:
     specifier: 22.8.6
     version: 22.8.6
@@ -1304,27 +1304,27 @@ packages:
       has-symbols: 1.0.3
     dev: true
 
-  /atomic-router-react@0.9.1(atomic-router@0.9.4)(effector-react@22.5.3)(effector@22.8.6)(react@18.2.0):
-    resolution: {integrity: sha512-22oJu2LUG8Z4HXmrlrSOFzUtna6iC3tYOT93/IRKq+Kqz6MuQmnvbcTlHOZ55c59WEJEng80nj8Dewa8ncSf4g==}
+  /atomic-router-react@0.8.5(atomic-router@0.8.0)(effector-react@22.5.3)(effector@22.8.6)(react@18.2.0):
+    resolution: {integrity: sha512-XI+L5Kt+NSbVyZ8rc2M+9i4VslETv+ASNuR3wUm537p83mkXWVqZ37taNCsVDnX2D4vLGkfj8Fl6b/hw/tBqeQ==}
     engines: {node: '>=10'}
     peerDependencies:
-      atomic-router: ^0.9.0
-      effector: ^22.8.8 || ^23
-      effector-react: ^22.1.0 || ^23
+      atomic-router: ^0.8.0
+      effector: ^22
+      effector-react: ^22
       react: ^17 || ^18
     dependencies:
-      atomic-router: 0.9.4(effector@22.8.6)(history@5.3.0)
+      atomic-router: 0.8.0(effector@22.8.6)(history@5.3.0)
       clsx: 1.2.1
       effector: 22.8.6
       effector-react: 22.5.3(effector@22.8.6)(react@18.2.0)
       react: 18.2.0
     dev: false
 
-  /atomic-router@0.9.4(effector@22.8.6)(history@5.3.0):
-    resolution: {integrity: sha512-5r6h/y76i9KKjqURU3dmpMqjvt1FBfI+7BIfMNp5R6LABlLQilm7UouDN0IwXeF0oifKZcjIM1gsyDJoAbIl8A==}
+  /atomic-router@0.8.0(effector@22.8.6)(history@5.3.0):
+    resolution: {integrity: sha512-jUNmxqs4zKiTWnvcgNU7u51k+wS8XHYgy7YKTTwiuNB+PPRj+sRAjE+50nyExDygRS5A7yELhT14ziIICjQoqQ==}
     engines: {node: '>=10'}
     peerDependencies:
-      effector: ^22.8.8 || ^23
+      effector: ^22
       history: ^5.3.0
     dependencies:
       effector: 22.8.6
