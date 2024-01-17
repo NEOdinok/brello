@@ -1,5 +1,6 @@
 import { createEvent, createStore, attach, sample } from "effector";
 import { api } from "@/shared/api";
+import { routes } from "@/shared/routing";
 import { not } from "patronum";
 
 export type SignInError = "UnknownError" | "InvalidEmail" | "RateLimit";
@@ -14,6 +15,8 @@ export const $email = createStore("");
 export const $error = createStore<SignInError | null>(null);
 export const $pending = signInFx.pending;
 export const $finished = createStore(false);
+
+export const currentRoute = routes.auth.signIn;
 
 $email.on(emailChanged, (_, email) => email);
 
