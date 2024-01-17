@@ -1,7 +1,7 @@
 import { currentRoute } from "./model";
 import { Error404Page } from "./page";
 
-export const Error404Route = {
+export default {
   view: Error404Page,
   route: currentRoute,
 };

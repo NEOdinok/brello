@@ -1,7 +1,7 @@
 import { currentRoute } from "./model";
 import { SignInPage } from "./page";
 
-export const AuthSignInRoute = {
+export default {
   view: SignInPage,
   route: currentRoute,
 };

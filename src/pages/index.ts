@@ -1,9 +1,11 @@
-import { createRoutesView } from "atomic-router-react";
-import { AuthSignInRoute } from "./auth/sign-in";
-import { HomeRoute } from "./home";
-import { OnboardingRoute } from "./onboarding";
-import { Error404Route } from "./error404";
+import { createRoutesView, RouteRecord } from "atomic-router-react";
 
-export const Pages = createRoutesView({
-  routes: [HomeRoute, AuthSignInRoute, OnboardingRoute, Error404Route],
-});
+const pages = import.meta.glob<
+  true,
+  string,
+  { default: RouteRecord<object, object> }
+>("./**/index.ts", { eager: true });
+
+const routes = Object.values(pages).map((page) => page.default);
+
+export const Pages = createRoutesView({ routes });
