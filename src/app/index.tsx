@@ -1,7 +1,7 @@
 import "@/app/styles/index.css";
-import { SignInPage } from "@/pages/auth/sign-in";
+import { SignInPage } from "@/pages/auth/sign-in/page";
 
-export function App() {
+export function Application() {
   return (
     <>
       <SignInPage />
