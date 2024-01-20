@@ -12,6 +12,15 @@ export interface User {
   email: Email;
 }
 
+export const signInWithEmailFx = createEffect<
+  { email: Email },
+  void,
+  AuthError
+>(async ({ email }) => {
+  console.log({ email });
+  return;
+});
+
 const checkError = (error: AuthError | null) => {
   if (error) {
     throw error;
