@@ -1,9 +1,10 @@
 import { createHistoryRouter, createRouterControls } from "atomic-router";
-import { pageNotFoundRoute, routesMap } from "./routes";
-import { createBrowserHistory } from "history";
 import { sample } from "effector";
-import { appStarted } from "../init";
+import { createBrowserHistory } from "history";
 import { debug } from "patronum";
+
+import { appStarted } from "../init";
+import { pageNotFoundRoute, routesMap } from "./routes";
 
 export { routes, pageNotFoundRoute } from "./routes";
 
@@ -17,7 +18,7 @@ export const router = createHistoryRouter({
 
 sample({
   clock: appStarted,
-  fn: () => createBrowserHistory,
+  fn: () => createBrowserHistory(),
   target: router.setHistory,
 });
 
