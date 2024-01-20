@@ -1,22 +1,21 @@
 import { useUnit } from "effector-react";
+import { FC } from "react";
 
-import { Input, Button, Logo, FeaturedIcon } from "@/shared/ui";
-import { ImageLogomark } from "@/shared/assets/images";
 import { IconArrowLeft, IconMail01 } from "@/shared/assets/icons";
-
-import styles from "./styles.module.css";
+import { ImageLogomark } from "@/shared/assets/images";
+import { Button, FeaturedIcon, Input, Logo } from "@/shared/ui";
 
 import {
-  type SignInError,
-  emailChanged,
   $email,
-  $pending,
-  $finished,
-  formSubmitted,
   $error,
+  $finished,
+  $pending,
+  type SignInError,
   backToLoginClicked,
+  emailChanged,
+  formSubmitted,
 } from "./model";
-import { FC } from "react";
+import styles from "./styles.module.css";
 
 export const SignInPage = () => {
   const finished = useUnit($finished);
@@ -29,11 +28,7 @@ export const SignInPage = () => {
             <Logo />
           </header>
           <section className={styles.form}>
-            <img
-              className={styles.logomark}
-              src={ImageLogomark}
-              alt="Brello logomark"
-            />
+            <img className={styles.logomark} src={ImageLogomark} alt="Brello logomark" />
             {finished ? <LoginSucceded /> : <LoginForm />}
           </section>
           <footer className={styles.footer}>
@@ -92,21 +87,12 @@ const LoginSucceded: FC = () => {
 
   return (
     <>
-      <FeaturedIcon
-        className={styles.featuredIcon}
-        color="primary"
-        Icon={IconMail01}
-      />
+      <FeaturedIcon className={styles.featuredIcon} color="primary" Icon={IconMail01} />
       <h1 className={styles.headline}>Check your email</h1>
       <p className={styles.description}>
-        We sent a login link to{" "}
-        <span className={styles.descriptionAccent}>{email}</span>
+        We sent a login link to <span className={styles.descriptionAccent}>{email}</span>
       </p>
-      <Button
-        variant="link-gray"
-        className={styles.buttonBack}
-        onClick={() => handleBack()}
-      >
+      <Button variant="link-gray" className={styles.buttonBack} onClick={() => handleBack()}>
         <IconArrowLeft className={styles.backIcon} />
         Back to login
       </Button>
