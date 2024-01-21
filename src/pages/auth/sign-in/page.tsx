@@ -1,9 +1,9 @@
+import { LayoutAuthn } from "@/layouts/authn";
 import { useUnit } from "effector-react";
 import { FC } from "react";
 
 import { IconArrowLeft, IconMail01 } from "@/shared/assets/icons";
-import { ImageLogomark } from "@/shared/assets/images";
-import { Button, FeaturedIcon, Input, Logo } from "@/shared/ui";
+import { Button, FeaturedIcon, Input } from "@/shared/ui";
 
 import {
   $email,
@@ -20,28 +20,7 @@ import styles from "./styles.module.css";
 export const SignInPage = () => {
   const finished = useUnit($finished);
 
-  return (
-    <>
-      <main className={styles.root}>
-        <div className={styles.content}>
-          <header className={styles.header}>
-            <Logo />
-          </header>
-          <section className={styles.form}>
-            <img className={styles.logomark} src={ImageLogomark} alt="Brello logomark" />
-            {finished ? <LoginSucceded /> : <LoginForm />}
-          </section>
-          <footer className={styles.footer}>
-            <p className={styles.info}>&copy; Brello 2023</p>
-            <p className={styles.info}>
-              <IconMail01 className={styles.mail} /> help@brello.io
-            </p>
-          </footer>
-        </div>
-        <div className={styles.geometric} />
-      </main>
-    </>
-  );
+  return <LayoutAuthn>{finished ? <LoginSucceeded /> : <LoginForm />}</LayoutAuthn>;
 };
 
 const errorText: { [Key in SignInError]: string } = {
@@ -82,7 +61,7 @@ const LoginForm: FC = () => {
   );
 };
 
-const LoginSucceded: FC = () => {
+const LoginSucceeded: FC = () => {
   const [email, handleBack] = useUnit([$email, backToLoginClicked]);
 
   return (
