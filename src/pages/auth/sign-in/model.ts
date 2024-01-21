@@ -1,9 +1,12 @@
-import { createEvent, createStore, attach, sample } from "effector";
+import { attach, createEvent, createStore, sample } from "effector";
+import { debug, not } from "patronum";
+
 import { api } from "@/shared/api";
 import { routes } from "@/shared/routing";
-import { not } from "patronum";
 
 export type SignInError = "UnknownError" | "InvalidEmail" | "RateLimit";
+
+export const currentRoute = routes.auth.signIn;
 
 const signInFx = attach({ effect: api.auth.signInWithEmailFx });
 
@@ -16,13 +19,20 @@ export const $error = createStore<SignInError | null>(null);
 export const $pending = signInFx.pending;
 export const $finished = createStore(false);
 
-export const currentRoute = routes.auth.signIn;
+// TODO: add resetting when atomic-router is installed
+
+const $emailValid = $email.map(
+  (email) => email.length > 5 && email.indexOf("@") > 0 && email.includes("."),
+);
 
 $email.on(emailChanged, (_, email) => email);
 
-const $emailValid = $email.map(
-  (email) => email.length > 5 && email.indexOf("@") > 0 && email.includes(".")
-);
+sample({
+  clock: formSubmitted,
+  filter: not($emailValid),
+  fn: (): SignInError => "InvalidEmail",
+  target: $error,
+});
 
 sample({
   clock: formSubmitted,
@@ -33,15 +43,6 @@ sample({
 
 $finished.on(signInFx.done, () => true);
 
-// Handle errors
-
-sample({
-  clock: formSubmitted,
-  filter: not($emailValid),
-  fn: (): SignInError => "InvalidEmail",
-  target: $error,
-});
-
 $error.on(signInFx.failData, (_, error) => {
   if (error.status === 429) {
     return "RateLimit";
@@ -49,9 +50,11 @@ $error.on(signInFx.failData, (_, error) => {
   return "UnknownError";
 });
 
-// Login finished
+// Login finished, let's handle this state
 
 sample({
   clock: backToLoginClicked,
   target: [$email.reinit, $error.reinit, $finished.reinit],
 });
+
+debug($error);
