@@ -1,5 +1,5 @@
 import { attach, createEvent, createStore, sample } from "effector";
-import { debug, not } from "patronum";
+import { not } from "patronum";
 
 import { api } from "@/shared/api";
 import { routes } from "@/shared/routing";
@@ -56,5 +56,3 @@ sample({
   clock: backToLoginClicked,
   target: [$email.reinit, $error.reinit, $finished.reinit],
 });
-
-debug($error);
