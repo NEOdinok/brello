@@ -1,6 +1,7 @@
-import { LayoutAuthn } from "@/layouts/authn";
 import { useUnit } from "effector-react";
 import { FC } from "react";
+
+import { LayoutAuthn } from "@/layouts/authn";
 
 import { IconArrowLeft, IconMail01 } from "@/shared/assets/icons";
 import { Button, FeaturedIcon, Input } from "@/shared/ui";

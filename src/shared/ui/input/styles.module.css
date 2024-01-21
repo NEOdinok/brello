@@ -15,7 +15,9 @@
 
 .root:focus-visible {
   border-color: var(--color-primary-300);
-  box-shadow: var(--shadow-xs), 0 0 0 4px var(--color-primary-100);
+  box-shadow:
+    var(--shadow-xs),
+    0 0 0 4px var(--color-primary-100);
   outline: none;
 }
 
@@ -63,5 +65,7 @@
 
 .has-error:focus-visible {
   border-color: var(--color-error-300);
-  box-shadow: var(--shadow-xs), 0 0 0 4px var(--color-error-100);
+  box-shadow:
+    var(--shadow-xs),
+    0 0 0 4px var(--color-error-100);
 }
