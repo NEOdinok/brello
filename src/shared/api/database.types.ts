@@ -6,29 +6,35 @@ export interface Database {
       profiles: {
         Row: {
           avatar_url: string | null;
-          first_name: string | null;
+          created_at: string;
+          first_name: string;
           id: string;
           last_name: string | null;
-          updated_at: string | null;
+          updated_at: string;
+          user_id: string;
         };
         Insert: {
           avatar_url?: string | null;
-          first_name?: string | null;
-          id: string;
+          created_at?: string;
+          first_name: string;
+          id?: string;
           last_name?: string | null;
-          updated_at?: string | null;
+          updated_at?: string;
+          user_id: string;
         };
         Update: {
           avatar_url?: string | null;
-          first_name?: string | null;
+          created_at?: string;
+          first_name?: string;
           id?: string;
           last_name?: string | null;
-          updated_at?: string | null;
+          updated_at?: string;
+          user_id?: string;
         };
         Relationships: [
           {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
+            foreignKeyName: "profiles_user_id_fkey";
+            columns: ["user_id"];
             referencedRelation: "users";
             referencedColumns: ["id"];
           },
