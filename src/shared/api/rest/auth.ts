@@ -2,7 +2,6 @@ import { AuthError } from "@supabase/supabase-js";
 import { createEffect } from "effector";
 
 import { client } from "@/shared/api/client";
-import { SITE_URL } from "@/shared/config";
 
 export type Email = string;
 export type UserId = Uuid;
@@ -18,42 +17,38 @@ const checkError = (error: AuthError | null) => {
   }
 };
 
-export const signInWithEmailFx = createEffect<
-  { email: Email },
-  void,
-  AuthError
->(async ({ email }) => {
-  const { error } = await client.auth.signInWithOtp({
-    email,
-    options: {
-      emailRedirectTo: SITE_URL,
-    },
-  });
+export const signInWithEmailFx = createEffect<{ email: Email }, void, AuthError>(
+  async ({ email }) => {
+    const baseUrl = document.location.toString();
+    const emailRedirectTo = new URL("/auth/finish", baseUrl).toString();
+    const { error } = await client.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo },
+    });
 
-  checkError(error);
-});
+    checkError(error);
+  },
+);
 
-export const getMeFx = createEffect<
-  void,
-  { id: string; email: string } | null,
-  AuthError
->(async () => {
-  const {
-    data: { user },
-    error,
-  } = await client.auth.getUser();
+export const getMeFx = createEffect<void, { id: string; email: string } | null, AuthError>(
+  async () => {
+    const {
+      data: { user },
+      error,
+    } = await client.auth.getUser();
 
-  checkError(error);
+    checkError(error);
 
-  if (user) {
-    return {
-      id: user.id as string,
-      email: user.email as string,
-    };
-  }
+    if (user) {
+      return {
+        id: user.id as string,
+        email: user.email as string,
+      };
+    }
 
-  return null;
-});
+    return null;
+  },
+);
 
 export const signOutFx = createEffect<void, void, AuthError>(async () => {
   const { error } = await client.auth.signOut();
@@ -61,12 +56,10 @@ export const signOutFx = createEffect<void, void, AuthError>(async () => {
   checkError(error);
 });
 
-export const signInWithGoogleFx = createEffect<void, void, AuthError>(
-  async () => {
-    const { error } = await client.auth.signInWithOAuth({
-      provider: "github",
-    });
+export const signInWithGoogleFx = createEffect<void, void, AuthError>(async () => {
+  const { error } = await client.auth.signInWithOAuth({
+    provider: "github",
+  });
 
-    checkError(error);
-  }
-);
+  checkError(error);
+});

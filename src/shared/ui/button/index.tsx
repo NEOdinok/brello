@@ -1,10 +1,8 @@
-import styles from "./styles.module.css";
-
 import cn from "clsx";
-
 import type { ButtonHTMLAttributes, ReactNode } from "react";
-
 import { forwardRef } from "react";
+
+import styles from "./styles.module.css";
 
 export type Ref = HTMLButtonElement;
 
@@ -29,7 +27,7 @@ export const Button = forwardRef<Ref, Props>(
       disabled,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const classList = cn(
       styles.root,
@@ -38,7 +36,7 @@ export const Button = forwardRef<Ref, Props>(
       {
         [styles.desctuctive]: isDestructive,
       },
-      className
+      className,
     );
 
     return (
@@ -53,5 +51,5 @@ export const Button = forwardRef<Ref, Props>(
         {loading ? "Loading…" : children}
       </button>
     );
-  }
+  },
 );

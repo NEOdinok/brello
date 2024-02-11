@@ -1,9 +1,9 @@
-import { InputHTMLAttributes, ChangeEvent } from "react";
-import styles from "./styles.module.css";
 import cn from "clsx";
+import { ChangeEvent, InputHTMLAttributes } from "react";
 
-export interface Props<T extends string>
-  extends InputHTMLAttributes<HTMLInputElement> {
+import styles from "./styles.module.css";
+
+export interface Props<T extends string> extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   onValue: ({ value, name }: { value: string; name: T }) => void;
   name: T;
@@ -64,7 +64,7 @@ export const Input = <T extends string>({
           {
             [styles.hasError]: hasError,
           },
-          className
+          className,
         )}
         value={value}
         onChange={handleChange}
