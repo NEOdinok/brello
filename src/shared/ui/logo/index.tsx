@@ -1,7 +1,9 @@
-import { FC } from "react";
-import { ImageLogomark } from "@/shared/assets/images";
-import styles from "./styles.module.css";
 import cn from "clsx";
+import { FC } from "react";
+
+import { ImageLogomark } from "@/shared/assets/images";
+
+import styles from "./styles.module.css";
 
 interface Props {
   className?: string;

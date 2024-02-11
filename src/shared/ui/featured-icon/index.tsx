@@ -1,5 +1,5 @@
-import type { FC, FunctionComponent, SVGProps } from "react";
 import cn from "clsx";
+import type { FC, FunctionComponent, SVGProps } from "react";
 
 import styles from "./styles.module.css";
 
@@ -9,11 +9,7 @@ interface Props {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
 }
 
-export const FeaturedIcon: FC<Props> = ({
-  className,
-  color = "primary",
-  Icon,
-}) => {
+export const FeaturedIcon: FC<Props> = ({ className, color = "primary", Icon }) => {
   const classList = cn(styles.root, styles[`color-${color}`], className);
 
   return (
