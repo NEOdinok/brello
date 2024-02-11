@@ -20,7 +20,7 @@ const checkError = (error: AuthError | null) => {
 export const signInWithEmailFx = createEffect<{ email: Email }, void, AuthError>(
   async ({ email }) => {
     const baseUrl = document.location.toString();
-    const emailRedirectTo = new URL("auth/finish", baseUrl).toString();
+    const emailRedirectTo = new URL("/auth/finish", baseUrl).toString();
     const { error } = await client.auth.signInWithOtp({
       email,
       options: { emailRedirectTo },
