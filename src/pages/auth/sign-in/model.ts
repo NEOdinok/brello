@@ -3,10 +3,14 @@ import { not } from "patronum";
 
 import { api } from "@/shared/api";
 import { routes } from "@/shared/routing";
+import { chainAnonymous } from "@/shared/viewer";
 
 export type SignInError = "UnknownError" | "InvalidEmail" | "RateLimit";
 
 export const currentRoute = routes.auth.signIn;
+export const anonymousRoute = chainAnonymous(currentRoute, {
+  otherwise: routes.home.open,
+});
 
 const signInFx = attach({ effect: api.auth.signInWithEmailFx });
 

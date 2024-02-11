@@ -18,6 +18,10 @@ import {
 } from "./model";
 import styles from "./styles.module.css";
 
+export const PageLoader = () => {
+  return <LayoutAuthn>Session loading…</LayoutAuthn>;
+};
+
 export const SignInPage = () => {
   const finished = useUnit($finished);
 
@@ -52,7 +56,7 @@ const LoginForm: FC = () => {
           error={error ? errorText[error] : undefined}
           label="Email"
           placeholder="Enter your email"
-          onValue={({ value }) => handleEmail(value)}
+          onValue={handleEmail}
         />
         <Button loading={pending} className={styles.button} type="submit">
           Get started
