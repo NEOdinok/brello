@@ -56,7 +56,6 @@ const LoginForm: FC = () => {
           error={error ? errorText[error] : undefined}
           label="Email"
           placeholder="Enter your email"
-          // onValue={({ value }) => handleEmail(value)}
           onValue={handleEmail}
         />
         <Button loading={pending} className={styles.button} type="submit">
