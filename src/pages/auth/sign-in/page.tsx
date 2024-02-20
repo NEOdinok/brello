@@ -24,6 +24,10 @@ export const SignInPage = () => {
   return <LayoutAuthn>{finished ? <LoginSucceeded /> : <LoginForm />}</LayoutAuthn>;
 };
 
+export const PageLoader = () => {
+  return <LayoutAuthn>Session loading…</LayoutAuthn>;
+};
+
 const errorText: { [Key in SignInError]: string } = {
   UnknownError: "Something wrong happened. Please try again.",
   InvalidEmail: "Must be a valid email address.",
@@ -52,7 +56,8 @@ const LoginForm: FC = () => {
           error={error ? errorText[error] : undefined}
           label="Email"
           placeholder="Enter your email"
-          onValue={({ value }) => handleEmail(value)}
+          // onValue={({ value }) => handleEmail(value)}
+          onValue={handleEmail}
         />
         <Button loading={pending} className={styles.button} type="submit">
           Get started

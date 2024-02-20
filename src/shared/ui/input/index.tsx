@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 
 export interface Props<T extends string> extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
-  onValue: ({ value, name }: { value: string; name: T }) => void;
+  onValue: (value: string, { name }: { name: T }) => void;
   name: T;
   value: string;
   label?: string;
@@ -29,7 +29,7 @@ export const Input = <T extends string>({
 }: Props<T>) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.currentTarget;
-    onValue({ value, name: name as T });
+    onValue(value, { name: name as T });
   };
 
   const hasError = Boolean(error);
