@@ -1,6 +1,5 @@
 import { RouteInstance, RouteParams, RouteParamsAndQuery, chainRoute } from "atomic-router";
 import { Effect, Event, attach, createEvent, createStore, sample } from "effector";
-import { debug } from "patronum";
 
 import { User, api } from "@/shared/api";
 
@@ -15,7 +14,6 @@ export const viewerGetFx = attach({ effect: api.auth.getMeFx });
 
 export const $viewer = createStore<User | null>(null);
 const $viewerStatus = createStore(ViewerStatus.Initial);
-debug($viewerStatus, "Viewer Status");
 
 $viewerStatus.on(viewerGetFx, (status) => {
   if (status === ViewerStatus.Initial) return ViewerStatus.Pending;
