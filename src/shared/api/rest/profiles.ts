@@ -68,16 +68,12 @@ export const profileGetFx = createEffect<{ userId: UserId }, ProfileCurrent | nu
 
     const { email, profiles } = data[0];
 
-    if (profiles === null) {
-      return null;
-    }
-
     return {
       userId,
       email,
-      firstName: profiles.first_name as string,
-      lastName: profiles.last_name,
-      avatarUrl: profiles.avatar_url,
+      firstName: profiles[0].first_name as string,
+      lastName: profiles[0].last_name,
+      avatarUrl: profiles[0].avatar_url,
     };
   },
 );
