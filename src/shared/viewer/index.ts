@@ -1,5 +1,6 @@
 import { RouteInstance, RouteParams, RouteParamsAndQuery, chainRoute } from "atomic-router";
 import { Effect, Event, attach, createEvent, createStore, sample } from "effector";
+import { debug } from "patronum";
 
 import { User, api } from "@/shared/api";
 
@@ -7,36 +8,36 @@ enum ViewerStatus {
   Initial = 0,
   Pending,
   Authenticated,
-  Anonumous,
+  Anonymous,
 }
 
 export const viewerGetFx = attach({ effect: api.auth.getMeFx });
 
 export const $viewer = createStore<User | null>(null);
 const $viewerStatus = createStore(ViewerStatus.Initial);
+debug($viewerStatus, "Viewer Status");
 
-// switch viewerStatus to Pending if current starting to load from Initial
-// else do not switch
 $viewerStatus.on(viewerGetFx, (status) => {
   if (status === ViewerStatus.Initial) return ViewerStatus.Pending;
   return status;
 });
 
-// fill user with whatever doneData returns
 $viewer.on(viewerGetFx.doneData, (_, user) => user);
+$viewerStatus.on(viewerGetFx.doneData, (_, user) => {
+  if (user) return ViewerStatus.Authenticated;
+  return ViewerStatus.Anonymous;
+});
 
 $viewerStatus.on(viewerGetFx.failData, (status, error) => {
-  if (error.status == 401 || error.status === 403) {
-    return ViewerStatus.Anonumous;
+  if (error.status === 401 || error.status === 403) {
+    return ViewerStatus.Anonymous;
   }
-
-  // Not Authn / Authz error, it is the first request,
-  // then switch to Anonumous
+  // If it is not the Authn or Authz error
+  // we need to go to anonymous when its the first viewerGet call
   if (status === ViewerStatus.Pending) {
-    return ViewerStatus.Anonumous;
+    return ViewerStatus.Anonymous;
   }
-
-  //return unchanged status otherwise;
+  // Otherwise don't change, to mitigate screen flicks and data loss
   return status;
 });
 
@@ -53,8 +54,6 @@ export function ChainAuthenticated<Params extends RouteParams>(
   const userAuthenticated = createEvent();
   const userAnonymous = createEvent();
 
-  //logic
-
   sample({
     clock: authenticationCheckStarted,
     source: $viewerStatus,
@@ -72,7 +71,7 @@ export function ChainAuthenticated<Params extends RouteParams>(
   sample({
     clock: [authenticationCheckStarted, viewerGetFx.done, viewerGetFx.fail],
     source: $viewerStatus,
-    filter: (status) => status === ViewerStatus.Anonumous,
+    filter: (status) => status === ViewerStatus.Anonymous,
     target: userAnonymous,
   });
 
@@ -84,6 +83,9 @@ export function ChainAuthenticated<Params extends RouteParams>(
     });
   }
 
+  // TODO: When chained route already opened, but viewer status changed,
+  // looks like we need to close chainedRoute (or trigger check in parent route)
+
   return chainRoute({
     route,
     beforeOpen: authenticationCheckStarted,
@@ -92,7 +94,7 @@ export function ChainAuthenticated<Params extends RouteParams>(
   });
 }
 
-export function chainAnonymous<Params extends RouteParams>(
+export function ChainAnonymous<Params extends RouteParams>(
   route: RouteInstance<Params>,
   { otherwise }: ChainParams = {},
 ): RouteInstance<Params> {
@@ -117,7 +119,7 @@ export function chainAnonymous<Params extends RouteParams>(
   sample({
     clock: [authenticationCheckStarted, viewerGetFx.done, viewerGetFx.fail],
     source: $viewerStatus,
-    filter: (status) => status === ViewerStatus.Anonumous,
+    filter: (status) => status === ViewerStatus.Anonymous,
     target: userAnonymous,
   });
 
