@@ -35,44 +35,6 @@ export type Database = {
           },
         ];
       };
-      workspaces: {
-        Row: {
-          avatar_url: string | null;
-          created_at: string;
-          description: string | null;
-          id: string;
-          name: string;
-          slug: string | null;
-          user_id: string;
-        };
-        Insert: {
-          avatar_url?: string | null;
-          created_at?: string;
-          description?: string | null;
-          id?: string;
-          name: string;
-          slug?: string | null;
-          user_id: string;
-        };
-        Update: {
-          avatar_url?: string | null;
-          created_at?: string;
-          description?: string | null;
-          id?: string;
-          name?: string;
-          slug?: string | null;
-          user_id?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "workspaces_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          },
-        ];
-      };
     };
     Views: {
       [_ in never]: never;
