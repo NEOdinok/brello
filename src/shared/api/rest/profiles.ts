@@ -17,7 +17,7 @@ export interface ProfileCurrent extends Profile {
 
 export const profileExistsFx = createEffect<{ userId: UserId }, boolean, PostgrestError>(
   async ({ userId }) => {
-    const { data: profiles, error } = await client.from("profiles").select().eq("user_id", userId);
+    const { data: profiles, error } = await client.from("profiles").select().eq("id", userId);
 
     checkError(error);
 
@@ -58,7 +58,7 @@ export const profileGetFx = createEffect<{ userId: UserId }, ProfileCurrent | nu
     )
   `,
       )
-      .eq("user_id", userId);
+      .eq("id", userId);
 
     checkError(error);
 
