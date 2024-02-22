@@ -2,9 +2,10 @@
   display: flex;
   height: 100%;
   padding: 76px 16px 0;
-  background-image: url("@/shared/assets/images/grid-background-pattern-md.svg");
+  background-image: url("@/shared/assets/images/grid-background-pattern.svg");
   background-position: center -164px;
   background-repeat: no-repeat;
+  background-size: 480px;
 }
 
 .section {
@@ -63,7 +64,8 @@
     align-items: center;
     padding: 16px;
     background-position: center -196px;
-    background-image: url("@/shared/assets/images/grid-background-pattern-lg.svg");
+    background-image: url("@/shared/assets/images/grid-background-pattern.svg");
+    background-size: 640px;
   }
 
   .featured-icon {
