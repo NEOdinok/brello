@@ -1,6 +1,6 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       profiles: {
@@ -29,6 +29,45 @@ export interface Database {
           {
             foreignKeyName: "profiles_id_fkey";
             columns: ["id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      workspaces: {
+        Row: {
+          avatar_url: string | null;
+          created_at: string;
+          description: string | null;
+          id: string;
+          name: string;
+          slug: string | null;
+          user_id: string;
+        };
+        Insert: {
+          avatar_url?: string | null;
+          created_at?: string;
+          description?: string | null;
+          id?: string;
+          name: string;
+          slug?: string | null;
+          user_id: string;
+        };
+        Update: {
+          avatar_url?: string | null;
+          created_at?: string;
+          description?: string | null;
+          id?: string;
+          name?: string;
+          slug?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "public_workspaces_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
             referencedRelation: "users";
             referencedColumns: ["id"];
           },
@@ -48,4 +87,4 @@ export interface Database {
       [_ in never]: never;
     };
   };
-}
+};
