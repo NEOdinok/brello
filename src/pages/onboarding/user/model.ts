@@ -4,7 +4,7 @@ import { not, pending, reset } from "patronum";
 
 import { api } from "@/shared/api";
 import { routes } from "@/shared/routing";
-import { $viewer, ChainAuthenticated } from "@/shared/viewer";
+import { $viewer, chainAuthenticated } from "@/shared/viewer";
 
 export type OnboardingUserError = "FirstNameRequired" | "UnknownError";
 
@@ -18,7 +18,7 @@ const profileExistsFx = attach({
 const profileCreateFx = attach({ effect: api.profiles.profileCreateFx });
 
 export const currentRoute = routes.onboarding.user;
-export const authenticatedRoute = ChainAuthenticated(currentRoute, {
+export const authenticatedRoute = chainAuthenticated(currentRoute, {
   otherwise: routes.auth.signIn.open,
 });
 export const profileLoadRoute = chainRoute({
