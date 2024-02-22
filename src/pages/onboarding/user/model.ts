@@ -2,8 +2,11 @@ import { chainRoute } from "atomic-router";
 import { attach, createEvent, createStore, sample } from "effector";
 import { not, pending, reset } from "patronum";
 
+import { onboardingProfileSkip } from "@/features/onboarding";
+
 import { api } from "@/shared/api";
-import { routes } from "@/shared/routing";
+import { noop } from "@/shared/lib/noop";
+import { comebackRestore, routes } from "@/shared/routing";
 import { $viewer, chainAuthenticated } from "@/shared/viewer";
 
 export type OnboardingUserError = "FirstNameRequired" | "UnknownError";
@@ -25,13 +28,14 @@ export const profileLoadRoute = chainRoute({
   route: authenticatedRoute,
   beforeOpen: {
     effect: profileExistsFx,
-    mapParams: () => ({}),
+    mapParams: noop,
   },
 });
 
 export const formSubmitted = createEvent();
 export const firstNameChanged = createEvent<string>();
 export const lastNameChanged = createEvent<string>();
+export const skipClicked = createEvent();
 const onboardingUserFinished = createEvent();
 
 export const $firstName = createStore("");
@@ -51,6 +55,11 @@ sample({
   clock: profileExistsFx.doneData,
   filter: (exists) => exists,
   target: onboardingUserFinished,
+});
+
+sample({
+  clock: skipClicked,
+  target: onboardingProfileSkip.enable,
 });
 
 $firstName.on(firstNameChanged, (_, firstName) => firstName);
@@ -80,7 +89,7 @@ sample({
 
 sample({
   clock: onboardingUserFinished,
-  target: routes.home.open,
+  target: comebackRestore,
 });
 
 sample({

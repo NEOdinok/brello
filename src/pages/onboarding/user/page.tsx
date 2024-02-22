@@ -15,6 +15,7 @@ import {
   firstNameChanged,
   formSubmitted,
   lastNameChanged,
+  skipClicked,
 } from "./model";
 import styles from "./styles.module.css";
 
@@ -45,10 +46,11 @@ export const OnboardingUserPage = () => {
     $error,
   ]) as [string, string, boolean, OnboardingUserError | null];
 
-  const [handleFormSubmit, handleFirstName, handleLastName] = useUnit([
+  const [handleFormSubmit, handleFirstName, handleLastName, handleSkip] = useUnit([
     formSubmitted,
     firstNameChanged,
     lastNameChanged,
+    skipClicked,
   ]);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
@@ -68,7 +70,7 @@ export const OnboardingUserPage = () => {
         <h1 className={styles.headline}>Please, introduce yourself</h1>
         <p className={styles.description}>
           You can do this later on Profile page.{" "}
-          <Link className={styles.link} to={routes.home}>
+          <Link onClick={handleSkip} className={styles.link} to={routes.home}>
             Skip
           </Link>
         </p>
