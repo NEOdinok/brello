@@ -1,5 +1,5 @@
 import { attach, createEvent, createStore, sample } from "effector";
-import { delay, not } from "patronum";
+import { delay, not, reset } from "patronum";
 
 import { api } from "@/shared/api";
 import { routes } from "@/shared/routing";
@@ -7,8 +7,8 @@ import { routes } from "@/shared/routing";
 export const currentRoute = routes.auth.finish;
 
 export const tryAgainClicked = createEvent();
-export const authFinished = createEvent();
-export const authFailed = createEvent();
+const authFinished = createEvent();
+const authFailed = createEvent();
 
 const getMeFx = attach({ effect: api.auth.getMeFx });
 
@@ -37,7 +37,7 @@ const readyToRedirect = delay({
 sample({
   clock: readyToRedirect,
   filter: currentRoute.$isOpened,
-  target: routes.home.open,
+  target: routes.onboarding.user.open,
 });
 
 sample({
@@ -51,9 +51,14 @@ sample({
   target: authFailed,
 });
 
-$successfully.on(authFinished, () => false);
+$successfully.on(authFailed, () => false);
 
 sample({
   clock: tryAgainClicked,
   target: routes.auth.signIn.open,
+});
+
+reset({
+  clock: currentRoute.closed,
+  target: $successfully,
 });
