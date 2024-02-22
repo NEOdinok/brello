@@ -14,14 +14,12 @@ const profileExistsFx = attach({
     return api.profiles.profileExistsFx({ userId: viewer!.id });
   },
 });
-
 const profileCreateFx = attach({ effect: api.profiles.profileCreateFx });
 
 export const currentRoute = routes.onboarding.user;
 export const authenticatedRoute = ChainAuthenticated(currentRoute, {
   otherwise: routes.auth.signIn.open,
 });
-
 export const profileLoadRoute = chainRoute({
   route: authenticatedRoute,
   beforeOpen: {
@@ -45,6 +43,8 @@ const $firstNameIsValid = $firstName.map((firstName) => firstName.length > 2);
 export const $pending = pending({
   effects: [profileExistsFx, profileCreateFx],
 });
+
+// If profile already exists, redirect to home page
 
 sample({
   clock: profileExistsFx.doneData,
@@ -72,6 +72,16 @@ sample({
 });
 
 sample({
+  clock: profileCreateFx.done,
+  target: onboardingUserFinished,
+});
+
+sample({
+  clock: onboardingUserFinished,
+  target: routes.home.open,
+});
+
+sample({
   clock: formSubmitted,
   filter: not($firstNameIsValid),
   fn: (): OnboardingUserError => "FirstNameRequired",
@@ -82,16 +92,6 @@ sample({
   clock: [profileExistsFx.fail, profileCreateFx.fail],
   fn: (): OnboardingUserError => "UnknownError",
   target: $error,
-});
-
-sample({
-  clock: profileCreateFx.done,
-  target: onboardingUserFinished,
-});
-
-sample({
-  clock: onboardingUserFinished,
-  target: routes.home.open,
 });
 
 reset({

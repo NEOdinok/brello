@@ -1,7 +1,7 @@
 import { createRouteView } from "atomic-router-react";
 
 import { authenticatedRoute, currentRoute, profileLoadRoute } from "./model";
-import { OnboardingUserPage, PageLoader } from "./pages";
+import { OnboardingUserPage, PageLoader } from "./page";
 
 const ProfileLoadView = createRouteView({
   route: profileLoadRoute,
@@ -11,7 +11,7 @@ const ProfileLoadView = createRouteView({
 
 const AuthenticationView = createRouteView({
   route: authenticatedRoute,
-  view: ProfileLoadView as () => React.JSX.Element,
+  view: ProfileLoadView as () => JSX.Element,
   otherwise: PageLoader,
 });
 
