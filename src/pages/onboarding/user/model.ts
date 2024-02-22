@@ -11,6 +11,7 @@ export type OnboardingUserError = "FirstNameRequired" | "UnknownError";
 const profileExistsFx = attach({
   source: $viewer,
   async effect(viewer) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return api.profiles.profileExistsFx({ userId: viewer!.id });
   },
 });
@@ -63,6 +64,7 @@ sample({
   filter: $firstNameIsValid,
   fn: ({ firstName, lastName, viewer }) => ({
     profile: {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       userId: viewer!.id,
       firstName,
       lastName,
