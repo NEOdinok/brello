@@ -3,3 +3,4 @@ export { FeaturedIcon } from "./featured-icon";
 export { Input } from "./input";
 export { Loading } from "./loading";
 export { Logo } from "./logo";
+export { Textarea } from "./textarea";

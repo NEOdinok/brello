@@ -2,35 +2,40 @@ import { chainRoute } from "atomic-router";
 import { attach, createEvent, createStore, sample } from "effector";
 import { not, pending, reset } from "patronum";
 
+import { onboardingProfileSkip } from "@/features/onboarding";
+
 import { api } from "@/shared/api";
-import { routes } from "@/shared/routing";
-import { $viewer, ChainAuthenticated } from "@/shared/viewer";
+import { noop } from "@/shared/lib/noop";
+import { comebackRestore, routes } from "@/shared/routing";
+import { $viewer, chainAuthenticated } from "@/shared/viewer";
 
 export type OnboardingUserError = "FirstNameRequired" | "UnknownError";
 
 const profileExistsFx = attach({
   source: $viewer,
   async effect(viewer) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return api.profiles.profileExistsFx({ userId: viewer!.id });
   },
 });
 const profileCreateFx = attach({ effect: api.profiles.profileCreateFx });
 
 export const currentRoute = routes.onboarding.user;
-export const authenticatedRoute = ChainAuthenticated(currentRoute, {
+export const authenticatedRoute = chainAuthenticated(currentRoute, {
   otherwise: routes.auth.signIn.open,
 });
 export const profileLoadRoute = chainRoute({
   route: authenticatedRoute,
   beforeOpen: {
     effect: profileExistsFx,
-    mapParams: () => ({}),
+    mapParams: noop,
   },
 });
 
 export const formSubmitted = createEvent();
 export const firstNameChanged = createEvent<string>();
 export const lastNameChanged = createEvent<string>();
+export const skipClicked = createEvent();
 const onboardingUserFinished = createEvent();
 
 export const $firstName = createStore("");
@@ -52,6 +57,11 @@ sample({
   target: onboardingUserFinished,
 });
 
+sample({
+  clock: skipClicked,
+  target: onboardingProfileSkip.enable,
+});
+
 $firstName.on(firstNameChanged, (_, firstName) => firstName);
 $error.reset(firstNameChanged);
 
@@ -63,6 +73,7 @@ sample({
   filter: $firstNameIsValid,
   fn: ({ firstName, lastName, viewer }) => ({
     profile: {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       userId: viewer!.id,
       firstName,
       lastName,
@@ -78,7 +89,7 @@ sample({
 
 sample({
   clock: onboardingUserFinished,
-  target: routes.home.open,
+  target: comebackRestore,
 });
 
 sample({

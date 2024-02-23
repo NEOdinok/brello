@@ -3,12 +3,12 @@ import { not } from "patronum";
 
 import { api } from "@/shared/api";
 import { routes } from "@/shared/routing";
-import { ChainAnonymous } from "@/shared/viewer";
+import { chainAnonymous } from "@/shared/viewer";
 
 export type SignInError = "UnknownError" | "InvalidEmail" | "RateLimit";
 
 export const currentRoute = routes.auth.signIn;
-export const anonymousRoute = ChainAnonymous(currentRoute, {
+export const anonymousRoute = chainAnonymous(currentRoute, {
   otherwise: routes.home.open,
 });
 
