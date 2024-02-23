@@ -8,3 +8,4 @@ export { NavMenuButton } from "./buttons/nav-menu-button";
 export { GhostButton } from "./buttons/ghost-button";
 export { Avatar } from "./avatar";
 export { SidebarNavigation } from "./sidebar-navigation";
+export { visuallyHiddenStyles } from "./visually-hidden";
