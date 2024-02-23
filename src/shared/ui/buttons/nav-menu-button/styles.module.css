@@ -1,0 +1,12 @@
+.root.opened {
+  color: var(--color-base-white);
+}
+
+.root.opened:hover {
+  background: rgb(255 255 255 / 15%);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}

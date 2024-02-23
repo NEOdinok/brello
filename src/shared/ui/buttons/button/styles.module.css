@@ -34,16 +34,28 @@
   --button-font: var(--font-text-sm-semibold);
 }
 
+.size-sm.icon-only {
+  padding: 8px;
+}
+
 .size-md {
   padding: 10px 16px;
 
   --button-font: var(--font-text-sm-semibold);
 }
 
+.size-md.icon-only {
+  padding: 10px;
+}
+
 .size-lg {
-  padding: 12px 18px;
+  padding: 10px 18px;
 
   --button-font: var(--font-text-md-semibold);
+}
+
+.size-lg.icon-only {
+  padding: 10px;
 }
 
 .size-xl {
@@ -52,10 +64,18 @@
   --button-font: var(--font-text-md-semibold);
 }
 
+.size-xl.icon-only {
+  padding: 14px;
+}
+
 .size-2xl {
   padding: 18px 28px;
 
   --button-font: var(--font-text-lg-semibold);
+}
+
+.size-2xl.icon-only {
+  padding: 18px;
 }
 
 .variant-primary:hover {
@@ -97,6 +117,34 @@
   --button-background-color: var(--color-base-white);
   --button-border-color: var(--color-gray-200);
   --button-text-color: var(--color-gray-300);
+
+  box-shadow: var(--button-box-shadow);
+}
+
+.variant-secondary-color {
+  --button-background-color: var(--color-primary-50);
+  --button-border-color: var(--color-primary-50);
+  --button-text-color: var(--color-primary-700);
+
+  box-shadow: var(--button-box-shadow);
+}
+
+.variant-secondary-color:hover {
+  --button-background-color: var(--color-primary-100);
+  --button-border-color: var(--color-primary-100);
+  --button-text-color: var(--color-primary-800);
+}
+
+.variant-secondary-color:focus-visible {
+  --button-background-color: var(--color-primary-50);
+  --button-border-color: var(--color-primary-50);
+  --button-box-shadow: var(--shadow-xs), 0 0 0 4px var(--color-primary-100);
+}
+
+.variant-secondary-color:disabled {
+  --button-background-color: var(--color-primary-25);
+  --button-border-color: var(--color-primary-25);
+  --button-text-color: var(--color-primary-300);
 
   box-shadow: var(--button-box-shadow);
 }
@@ -146,6 +194,31 @@
 }
 
 .variant-link-gray:disabled {
+  border: none;
+  background: none;
+  box-shadow: none;
+
+  --button-text-color: var(--color-gray-300);
+}
+
+.variant-tertiary-gray,
+.variant-tertiary-gray:focus-visible {
+  border: none;
+  background: none;
+  box-shadow: none;
+
+  --button-text-color: var(--color-gray-600);
+}
+
+.variant-tertiary-gray:hover {
+  border: none;
+  box-shadow: none;
+  background-color: var(--color-gray-50);
+
+  --button-text-color: var(--color-gray-700);
+}
+
+.variant-tertiary-gray:disabled {
   border: none;
   background: none;
   box-shadow: none;
