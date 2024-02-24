@@ -1,5 +1,15 @@
-export { ReactComponent as IconMail01 } from "./mail-01.svg";
 export { ReactComponent as IconAlertCircle } from "./alert-circle.svg";
 export { ReactComponent as IconArrowLeft } from "./arrow-left.svg";
-export { ReactComponent as IconUser01 } from "./user-01.svg";
+export { ReactComponent as IconFile04 } from "./file-04.svg";
+export { ReactComponent as IconFilm02 } from "./film-02.svg";
 export { ReactComponent as IconFolderShield } from "./folder-shield.svg";
+export { ReactComponent as IconImage01 } from "./image-01.svg";
+export { ReactComponent as IconLayersTwo01 } from "./layers-two-01.svg";
+export { ReactComponent as IconLogout01 } from "./logout-01.svg";
+export { ReactComponent as IconMail01 } from "./mail-01.svg";
+export { ReactComponent as IconMenu02 } from "./menu-02.svg";
+export { ReactComponent as IconTrash01 } from "./trash-01.svg";
+export { ReactComponent as IconUploadCloud02 } from "./upload-cloud-02.svg";
+export { ReactComponent as IconUser01 } from "./user-01.svg";
+export { ReactComponent as IconUsers02 } from "./users-02.svg";
+export { ReactComponent as IconXClose } from "./x-close.svg";

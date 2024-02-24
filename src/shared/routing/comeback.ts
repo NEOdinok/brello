@@ -1,5 +1,5 @@
-import { HistoryPushParams } from "atomic-router";
-import { createEffect, createEvent, sample } from "effector";
+import { HistoryPushParams, RouteInstance } from "atomic-router";
+import { Event, createEffect, createEvent, sample } from "effector";
 
 import { routes } from ".";
 import { router } from "./router";
@@ -15,6 +15,17 @@ const urlSaveFx = createEffect(() => {
   const pathWithQueryAndHash = `${url.pathname}${url.search}${url.hash}`;
   globalThis.localStorage.setItem(COMEBACK_KEY, pathWithQueryAndHash);
 });
+
+export function comebackNavigate(route: RouteInstance<object>): Event<void> {
+  const comebackNavigate = createEvent();
+
+  sample({
+    clock: comebackNavigate,
+    target: [comebackSave, route.navigate],
+  });
+
+  return comebackNavigate;
+}
 
 const urlReadFx = createEffect(() => {
   const pathWithQueryAndHash = globalThis.localStorage.getItem(COMEBACK_KEY);

@@ -1,0 +1,31 @@
+.root {
+  display: flex;
+  gap: 20px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.text {
+  color: var(--color-gray-700);
+  font: var(--font-text-sm-medium);
+  margin-bottom: 4px;
+}
+
+.supporting-text {
+  color: var(--color-gray-600);
+  font: var(--font-text-sm-regular);
+}
+
+@media (min-width: 640px) {
+  .root {
+    align-items: center;
+  }
+
+  .wrapper {
+    flex-direction: row;
+  }
+}

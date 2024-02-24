@@ -59,6 +59,11 @@
   --font-text-sm-medium: 500 14px/20px var(--font-sans);
   --font-text-sm-semibold: 600 14px/20px var(--font-sans);
 
+  /* Text xs */
+  --font-text-xs-regular: 400 12px/18px var(--font-sans);
+  --font-text-xs-medium: 500 12px/18px var(--font-sans);
+  --font-text-xs-semibold: 600 12px/18px var(--font-sans);
+
   /* Shadow xs */
   --shadow-xs: 0px 1px 2px rgb(16 24 40 / 5%);
 }

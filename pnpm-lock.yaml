@@ -38,14 +38,23 @@ dependencies:
   patronum:
     specifier: ^1.20.0
     version: 1.20.0(effector@22.8.8)
+  pretty-bytes:
+    specifier: 6.1.1
+    version: 6.1.1
   react:
     specifier: ^18.2.0
     version: 18.2.0
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
+  slugify:
+    specifier: ^1.6.6
+    version: 1.6.6
 
 devDependencies:
+  '@supabase/storage-js':
+    specifier: ^2.5.5
+    version: 2.5.5
   '@trivago/prettier-plugin-sort-imports':
     specifier: ^4.3.0
     version: 4.3.0(prettier@3.2.4)
@@ -777,7 +786,6 @@ packages:
     engines: {node: 4.x || >=6.0.0}
     dependencies:
       whatwg-url: 5.0.0
-    dev: false
 
   /@supabase/postgrest-js@1.9.2:
     resolution: {integrity: sha512-I6yHo8CC9cxhOo6DouDMy9uOfW7hjdsnCxZiaJuIVZm1dBGTFiQPgfMa9zXCamEWzNyWRjZvupAUuX+tqcl5Sw==}
@@ -801,7 +809,6 @@ packages:
     resolution: {integrity: sha512-OpLoDRjFwClwc2cjTJZG8XviTiQH4Ik8sCiMK5v7et0MDu2QlXjCAW3ljxJB5+z/KazdMOTnySi+hysxWUPu3w==}
     dependencies:
       '@supabase/node-fetch': 2.6.15
-    dev: false
 
   /@supabase/supabase-js@2.39.7:
     resolution: {integrity: sha512-1vxsX10Uhc2b+Dv9pRjBjHfqmw2N2h1PyTg9LEfICR3x2xwE24By1MGCjDZuzDKH5OeHCsf4it6K8KRluAAEXA==}
@@ -3355,6 +3362,11 @@ packages:
     hasBin: true
     dev: true
 
+  /pretty-bytes@6.1.1:
+    resolution: {integrity: sha512-mQUvGU6aUFQ+rNvTIAcZuWGRT9a6f6Yrg9bHs4ImKF+HZCEK+plBvnAZYSIQztknZF2qnzNtr6F8s0+IuptdlQ==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    dev: false
+
   /prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
     dependencies:
@@ -3627,6 +3639,11 @@ packages:
       ansi-styles: 6.2.1
       is-fullwidth-code-point: 4.0.0
     dev: true
+
+  /slugify@1.6.6:
+    resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
+    engines: {node: '>=8.0.0'}
+    dev: false
 
   /snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
@@ -3921,7 +3938,6 @@ packages:
 
   /tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
-    dev: false
 
   /trim-newlines@4.1.1:
     resolution: {integrity: sha512-jRKj0n0jXWo6kh62nA5TEh3+4igKDXLvzBJcPpiizP7oOolUrYIxmVBG9TOtHYFHoddUk6YvAkGeGoSVTXfQXQ==}
@@ -4113,14 +4129,12 @@ packages:
 
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
-    dev: false
 
   /whatwg-url@5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
-    dev: false
 
   /which-boxed-primitive@1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}

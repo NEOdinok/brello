@@ -4,15 +4,22 @@ import { forwardRef } from "react";
 
 import styles from "./styles.module.css";
 
-export type Ref = HTMLButtonElement;
-
 export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "md" | "lg" | "xl" | "2xl";
-  variant?: "primary" | "secondary-gray" | "link-gray" | "link-color";
+  variant?:
+    | "primary"
+    | "secondary-gray"
+    | "secondary-color"
+    | "link-gray"
+    | "link-color"
+    | "tertiary-gray";
   loading?: boolean;
   isDestructive?: boolean;
+  iconOnly?: boolean;
   children?: ReactNode;
 }
+
+export type Ref = HTMLButtonElement;
 
 export const Button = forwardRef<Ref, Props>(
   (
@@ -20,11 +27,12 @@ export const Button = forwardRef<Ref, Props>(
       className,
       size = "lg",
       variant = "primary",
-      isDestructive = false,
-      onClick,
-      children,
       loading = false,
       disabled,
+      isDestructive = false,
+      iconOnly = false,
+      onClick,
+      children,
       ...rest
     },
     ref,
@@ -35,6 +43,7 @@ export const Button = forwardRef<Ref, Props>(
       styles[`variant-${variant}`],
       {
         [styles.desctuctive]: isDestructive,
+        [styles.iconOnly]: iconOnly,
       },
       className,
     );

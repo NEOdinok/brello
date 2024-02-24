@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 
 interface Props {
   className?: string;
-  color?: "primary" | "error";
+  color?: "primary" | "gray" | "error" | "success";
   theme?: "light-circle-outline" | "modern";
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
 }

@@ -1,6 +1,13 @@
-export { Button } from "./button";
 export { FeaturedIcon } from "./featured-icon";
 export { Input } from "./input";
 export { Loading } from "./loading";
 export { Logo } from "./logo";
 export { Textarea } from "./textarea";
+export { Button } from "./buttons/button";
+export { NavMenuButton } from "./buttons/nav-menu-button";
+export { GhostButton } from "./buttons/ghost-button";
+export { Avatar } from "./avatar";
+export { SidebarNavigation } from "./sidebar-navigation";
+export { visuallyHiddenStyles } from "./visually-hidden";
+export { ImageUpload } from "./image-upload";
+export { FileUpload } from "./file-upload";

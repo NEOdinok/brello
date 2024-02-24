@@ -1,0 +1,156 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  user-select: none;
+}
+
+.base {
+  width: 100%;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  align-self: stretch;
+  border-radius: 12px;
+  border: 2px solid var(--color-gray-200);
+  background-color: var(--color-base-white);
+  position: relative;
+}
+
+.base:hover,
+.base:focus-visible {
+  border: 2px solid var(--color-primary-600);
+  cursor: pointer;
+  outline: none;
+}
+
+.base.draggable {
+  cursor: url("@/shared/assets/images/cursor.cur"), grabbing;
+  border: 2px solid var(--color-primary-600);
+}
+
+.base.disabled {
+  background-color: var(--color-gray-50);
+}
+
+.base.disabled:hover,
+.base.disabled:focus-visible {
+  border: 2px solid var(--color-gray-200);
+  cursor: not-allowed;
+  outline: none;
+}
+
+.text {
+  color: var(--color-gray-600);
+  font: var(--font-text-sm-regular);
+}
+
+.action-text {
+  color: var(--color-primary-700);
+  font: var(--font-text-sm-semibold);
+}
+
+.action-text.disabled {
+  color: var(--color-gray-300);
+}
+
+.supporting-text {
+  color: var(--color-gray-600);
+  font: var(--font-text-xs-regular);
+}
+
+.queue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  align-self: stretch;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.item {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--color-gray-200);
+}
+
+.item.completed {
+  border: 1px solid var(--color-primary-600);
+}
+
+.file-upload-icon {
+  flex-shrink: 0;
+}
+
+.item-info {
+  width: 100%;
+  position: relative;
+}
+
+.file-name {
+  color: var(--color-gray-700);
+  font: var(--font-text-sm-medium);
+}
+
+.file-size {
+  color: var(--color-gray-600);
+  font: var(--font-text-sm-regular);
+  margin-bottom: 4px;
+}
+
+.status-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.status-completed {
+  color: var(--color-primary-600);
+}
+
+.status-button {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  flex-shrink: 0;
+}
+
+.progress-bar {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  align-items: center;
+  height: 20px;
+}
+
+.progress {
+  /* Reset the default appearance */
+  appearance: none;
+
+  /* Get rid of default border in Firefox. */
+
+  width: 100%;
+  height: 8px;
+  border-radius: 8px;
+  border: none;
+}
+
+.progress::-webkit-progress-bar {
+  background-color: var(--color-gray-200);
+}
+
+.progress::-webkit-progress-value {
+  background-color: var(--color-primary-600);
+}
+
+.progress::-moz-progress-bar {
+  background-color: var(--color-primary-600);
+}
