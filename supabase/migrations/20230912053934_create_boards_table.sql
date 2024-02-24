@@ -12,3 +12,5 @@ alter table "public"."boards" enable row level security;
 CREATE UNIQUE INDEX boards_pkey ON public.boards USING btree (id);
 
 alter table "public"."boards" add constraint "boards_pkey" PRIMARY KEY using index "boards_pkey";
+
+
