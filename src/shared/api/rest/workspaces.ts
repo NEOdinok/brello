@@ -3,6 +3,7 @@ import { createEffect } from "effector";
 
 import { client } from "../client";
 import { UserId, checkError } from "./common";
+import { uploadAvatar } from "./storage";
 
 export interface Workspace {
   id: string;
@@ -48,29 +49,34 @@ export const workspaceCreateFx = createEffect<
   return;
 });
 
-export const workspaceGetFx = createEffect<{ userId: UserId }, Workspace | null, PostgrestError>(
-  async ({ userId }) => {
-    const { data, error } = await client.from("workspaces").select().eq("user_id", userId);
+export const workspaceGetFx = createEffect<
+  { workspaceId: Workspace["id"] },
+  Workspace | null,
+  PostgrestError
+>(async ({ workspaceId }) => {
+  const { data: workspace, error } = await client
+    .from("workspaces")
+    .select()
+    .eq("id", workspaceId)
+    .single();
 
-    checkError(error);
+  checkError(error);
 
-    if (data === null) {
-      return null;
-    }
+  if (workspace === null) {
+    return null;
+  }
 
-    const workspace = data[0];
-    const { id, name, slug, description, avatar_url } = workspace;
+  const { id, name, slug, description, avatar_url, user_id } = workspace;
 
-    return {
-      id,
-      userId,
-      name,
-      slug,
-      description,
-      avatarUrl: avatar_url,
-    };
-  },
-);
+  return {
+    id,
+    userId: user_id,
+    name,
+    slug,
+    description,
+    avatarUrl: avatar_url,
+  };
+});
 
 export const workspaceUpdateFx = createEffect<{ workspace: Workspace }, void, PostgrestError>(
   async ({ workspace }) => {
@@ -92,3 +98,29 @@ export const workspaceUpdateFx = createEffect<{ workspace: Workspace }, void, Po
     return;
   },
 );
+
+export const workspaceUploadAvatarFx = createEffect<
+  { workspaceId: string; file: File },
+  string,
+  PostgrestError
+>(async ({ workspaceId, file }) => {
+  const upload = uploadAvatar({
+    filePath: `workspaces/${workspaceId}`,
+    fileOptions: {
+      upsert: true,
+      contentType: "image/*",
+    },
+  });
+  const avatarUrl = await upload({ file });
+
+  const { error } = await client
+    .from("workspaces")
+    .update({
+      avatar_url: avatarUrl,
+    })
+    .eq("id", workspaceId);
+
+  checkError(error);
+
+  return avatarUrl;
+});
