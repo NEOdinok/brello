@@ -29,13 +29,8 @@ sample({
 
 $successfully.on(authFinished, () => true);
 
-const readyToRedirect = delay({
-  source: authFinished,
-  timeout: 800,
-});
-
 sample({
-  clock: readyToRedirect,
+  clock: delay(authFinished, 800),
   filter: currentRoute.$isOpened,
   target: routes.onboarding.user.open,
 });
