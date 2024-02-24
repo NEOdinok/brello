@@ -58,9 +58,12 @@ export const $avatarUrl = createStore<string | null>(null);
 
 export const $error = createStore<WorkspaceSettingsError | null>(null);
 
-export const $pending = pending({
-  effects: [previewUrlCreateFx, workspaceGetFx, workspaceUpdateFx, workspaceUploadAvatarFx],
-});
+export const $pending = pending([
+  previewUrlCreateFx,
+  workspaceGetFx,
+  workspaceUpdateFx,
+  workspaceUploadAvatarFx,
+]);
 const $slugGenerated = $name.map((name) => slugify(name, { lower: true, strict: true }));
 export const $slug = combine($slugCustom, $slugGenerated, (custom, generated) =>
   custom.trim() === "" ? generated : custom,

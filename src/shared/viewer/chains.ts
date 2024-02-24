@@ -1,11 +1,11 @@
 import { RouteInstance, RouteParams, RouteParamsAndQuery, chainRoute } from "atomic-router";
-import { Effect, Event, createEvent, sample } from "effector";
+import { Effect, EventCallable, createEvent, sample } from "effector";
 
 import { $viewerStatus, ViewerStatus, viewerGetFx } from "./model";
 
 interface ChainParams {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  otherwise?: Event<void> | Effect<void, any, any>;
+  otherwise?: EventCallable<void> | Effect<void, any, any>;
 }
 
 export function chainAuthenticated<Params extends RouteParams>(
@@ -41,7 +41,7 @@ export function chainAuthenticated<Params extends RouteParams>(
     sample({
       clock: userAnonymous,
       filter: route.$isOpened,
-      target: otherwise as Event<void>,
+      target: otherwise as EventCallable<void>,
     });
   }
 
@@ -89,7 +89,7 @@ export function chainAnonymous<Params extends RouteParams>(
     sample({
       clock: userAuthenticated,
       filter: route.$isOpened,
-      target: otherwise as Event<void>,
+      target: otherwise as EventCallable<void>,
     });
   }
 

@@ -6,40 +6,40 @@ settings:
 
 dependencies:
   '@effector/reflect':
-    specifier: ^8.3.3
-    version: 8.4.0(effector-react@22.5.4)(effector@22.8.8)(react@18.2.0)
+    specifier: 9.0.0
+    version: 9.0.0(effector-react@23.1.0)(effector@23.1.0)(react@18.2.0)
   '@supabase/supabase-js':
     specifier: ^2.38.4
     version: 2.39.7
   atomic-router:
-    specifier: ^0.8.0
-    version: 0.8.0(effector@22.8.8)(history@5.3.0)
+    specifier: 0.9.4
+    version: 0.9.4(effector@23.1.0)(history@5.3.0)
   atomic-router-react:
-    specifier: ^0.8.5
-    version: 0.8.5(atomic-router@0.8.0)(effector-react@22.5.4)(effector@22.8.8)(react@18.2.0)
+    specifier: 0.9.1
+    version: 0.9.1(atomic-router@0.9.4)(effector-react@23.1.0)(effector@23.1.0)(react@18.2.0)
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
   effector:
-    specifier: ^22.8.7
-    version: 22.8.8
+    specifier: 23.1.0
+    version: 23.1.0
   effector-react:
-    specifier: ^22.5.4
-    version: 22.5.4(effector@22.8.8)(react@18.2.0)
+    specifier: 23.1.0
+    version: 23.1.0(effector@23.1.0)(react@18.2.0)
   effector-storage:
-    specifier: ^7.0.0
-    version: 7.0.0(effector@22.8.8)
+    specifier: 7.0.0
+    version: 7.0.0(effector@23.1.0)
   history:
-    specifier: ^5.3.0
+    specifier: 5.3.0
     version: 5.3.0
   modern-normalize:
     specifier: ^2.0.0
     version: 2.0.0
   patronum:
-    specifier: ^1.20.0
-    version: 1.20.0(effector@22.8.8)
+    specifier: 2.1.1
+    version: 2.1.1(effector@23.1.0)
   pretty-bytes:
-    specifier: 6.1.1
+    specifier: ^6.1.1
     version: 6.1.1
   react:
     specifier: ^18.2.0
@@ -437,15 +437,15 @@ packages:
       postcss-selector-parser: 6.0.15
     dev: true
 
-  /@effector/reflect@8.4.0(effector-react@22.5.4)(effector@22.8.8)(react@18.2.0):
-    resolution: {integrity: sha512-MgzE9tum97JgO6ITq2Wcd42nYaInqpsrX7inRmY25Rp53YYu9ChBUMTCM/NHvc7qhFRC0PzsSCi0fkdRsjlz0g==}
+  /@effector/reflect@9.0.0(effector-react@23.1.0)(effector@23.1.0)(react@18.2.0):
+    resolution: {integrity: sha512-D/yyrn8LYicU26ubqnkZ0Zh4VmCeZuhsh1MTz9R7kImw3KKieoTU4wRfdEWyjRfqqDCwBmFMg9nE8shJjhJlMg==}
     peerDependencies:
-      effector: ^22.0.0 || ^23.0.0
-      effector-react: ^22.1.0 || ^23.0.0
+      effector: ^23.1.0
+      effector-react: ^23.1.0
       react: '>=16.8.0 <19.0.0'
     dependencies:
-      effector: 22.8.8
-      effector-react: 22.5.4(effector@22.8.8)(react@18.2.0)
+      effector: 23.1.0
+      effector-react: 23.1.0(effector@23.1.0)(react@18.2.0)
       react: 18.2.0
     dev: false
 
@@ -1379,30 +1379,30 @@ packages:
       has-symbols: 1.0.3
     dev: true
 
-  /atomic-router-react@0.8.5(atomic-router@0.8.0)(effector-react@22.5.4)(effector@22.8.8)(react@18.2.0):
-    resolution: {integrity: sha512-XI+L5Kt+NSbVyZ8rc2M+9i4VslETv+ASNuR3wUm537p83mkXWVqZ37taNCsVDnX2D4vLGkfj8Fl6b/hw/tBqeQ==}
+  /atomic-router-react@0.9.1(atomic-router@0.9.4)(effector-react@23.1.0)(effector@23.1.0)(react@18.2.0):
+    resolution: {integrity: sha512-22oJu2LUG8Z4HXmrlrSOFzUtna6iC3tYOT93/IRKq+Kqz6MuQmnvbcTlHOZ55c59WEJEng80nj8Dewa8ncSf4g==}
     engines: {node: '>=10'}
     peerDependencies:
-      atomic-router: ^0.8.0
-      effector: ^22
-      effector-react: ^22
+      atomic-router: ^0.9.0
+      effector: ^22.8.8 || ^23
+      effector-react: ^22.1.0 || ^23
       react: ^17 || ^18
     dependencies:
-      atomic-router: 0.8.0(effector@22.8.8)(history@5.3.0)
+      atomic-router: 0.9.4(effector@23.1.0)(history@5.3.0)
       clsx: 1.2.1
-      effector: 22.8.8
-      effector-react: 22.5.4(effector@22.8.8)(react@18.2.0)
+      effector: 23.1.0
+      effector-react: 23.1.0(effector@23.1.0)(react@18.2.0)
       react: 18.2.0
     dev: false
 
-  /atomic-router@0.8.0(effector@22.8.8)(history@5.3.0):
-    resolution: {integrity: sha512-jUNmxqs4zKiTWnvcgNU7u51k+wS8XHYgy7YKTTwiuNB+PPRj+sRAjE+50nyExDygRS5A7yELhT14ziIICjQoqQ==}
+  /atomic-router@0.9.4(effector@23.1.0)(history@5.3.0):
+    resolution: {integrity: sha512-5r6h/y76i9KKjqURU3dmpMqjvt1FBfI+7BIfMNp5R6LABlLQilm7UouDN0IwXeF0oifKZcjIM1gsyDJoAbIl8A==}
     engines: {node: '>=10'}
     peerDependencies:
-      effector: ^22
+      effector: ^22.8.8 || ^23
       history: ^5.3.0
     dependencies:
-      effector: 22.8.8
+      effector: 23.1.0
       history: 5.3.0
       path-to-regexp: 6.2.1
     dev: false
@@ -1754,28 +1754,28 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
-  /effector-react@22.5.4(effector@22.8.8)(react@18.2.0):
-    resolution: {integrity: sha512-7HmtfD/vqmqvGnu6jMojmns9cxIW45JPBkGgHrwvbXGpbm0bz2fmVj6PIttv+Bamfmrf9FAy2bZhs+Rwj+3Mxw==}
+  /effector-react@23.1.0(effector@23.1.0)(react@18.2.0):
+    resolution: {integrity: sha512-RrCyu45zhxzIwzy6azjgPjXENRM2AM4y3TJF4faj5vN6z0u8ItR9W91wokHu5+BwFj6MKg2NxQkL4r4jWtIRoQ==}
     engines: {node: '>=11.0.0'}
     peerDependencies:
-      effector: ^22.0.2
+      effector: ^23.0.0
       react: '>=16.8.0 <19.0.0'
     dependencies:
-      effector: 22.8.8
+      effector: 23.1.0
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /effector-storage@7.0.0(effector@22.8.8):
+  /effector-storage@7.0.0(effector@23.1.0):
     resolution: {integrity: sha512-iTwpZotNaEesliP/3jSE5eXGajBSci0Q7oCaTfgenNAwnZBrudwwifTxKU9+eI08QRh78AyS+Z6UfHX3aD+zOg==}
     peerDependencies:
       effector: ^22.4.0 || ^23.0.0
     dependencies:
-      effector: 22.8.8
+      effector: 23.1.0
     dev: false
 
-  /effector@22.8.8:
-    resolution: {integrity: sha512-uqYEPt/jIZ3Y1WhpyED1XuXAJNsVM5TcWZvcyQhl6nYKRynklGiu+Fy/BnLQftmMcxZS478laAuExUPfuOGiOg==}
+  /effector@23.1.0:
+    resolution: {integrity: sha512-PsiNE2UmEnS/xmyshISjMwqqGcUKF0upnA/8o1qXafyfrV1kYkOwhs9fuDfUKIAbgZVSZb+bowymPpfrNu7jFw==}
     engines: {node: '>=11.0.0'}
     dev: false
 
@@ -3287,12 +3287,12 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /patronum@1.20.0(effector@22.8.8):
-    resolution: {integrity: sha512-UsUR8nUbSPJ0kEQPNorZ/0+Rwlk+c45O4BfqlLHAdRQvx1C7ZSfC9txfPwJo+fajRtzVLebZm1m+67+Ke9SgdA==}
+  /patronum@2.1.1(effector@23.1.0):
+    resolution: {integrity: sha512-VPGBzylMxmkpw94ApK887hXqlzF+81gK3UJeUyTACjGVoQsNOkWdwK8FWUCFvBZK4R/TG4tT0eytlUjytkvbEQ==}
     peerDependencies:
-      effector: ^22.1.2
+      effector: ^23
     dependencies:
-      effector: 22.8.8
+      effector: 23.1.0
     dev: false
 
   /picocolors@1.0.0:

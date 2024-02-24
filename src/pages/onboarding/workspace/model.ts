@@ -39,9 +39,7 @@ export const $slug = createStore("");
 export const $description = createStore("");
 export const $error = createStore<OnboardingWorkspaceError | null>(null);
 
-export const $pending = pending({
-  effects: [workspaceCreateFx, workspaceExistsFx],
-});
+export const $pending = pending([workspaceCreateFx, workspaceExistsFx]);
 const $nameValid = $name.map((name) => name.trim().length > 2);
 const $slugValid = $slug.map(isValidSlug);
 

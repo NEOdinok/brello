@@ -1,5 +1,5 @@
 import { RouteInstance, RouteParamsAndQuery, chainRoute } from "atomic-router";
-import { Event, attach, createEvent, sample } from "effector";
+import { EventCallable, attach, createEvent, sample } from "effector";
 import { condition } from "patronum";
 
 import { api } from "@/shared/api";
@@ -9,7 +9,7 @@ import { $workspacesCache, workspaceCache } from "./model";
 type WorkspaceParams = { workspaceId: string };
 
 interface WorkspaceChainParams<Params extends WorkspaceParams> {
-  notFound?: Event<Params>;
+  notFound?: EventCallable<Params>;
 }
 
 const workspaceGetFx = attach({ effect: api.workspaces.workspaceGetFx });

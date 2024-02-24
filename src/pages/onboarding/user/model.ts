@@ -45,9 +45,7 @@ export const $error = createStore<OnboardingUserError | null>(null);
 
 const $firstNameIsValid = $firstName.map((firstName) => firstName.length > 2);
 
-export const $pending = pending({
-  effects: [profileExistsFx, profileCreateFx],
-});
+export const $pending = pending([profileExistsFx, profileCreateFx]);
 
 // If profile already exists, redirect to home page
 
