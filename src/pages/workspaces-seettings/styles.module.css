@@ -1,0 +1,89 @@
+.title {
+  color: var(--color-gray-900);
+  font: var(--font-display-xs-semibold);
+  margin-bottom: 32px;
+}
+
+.main-divider {
+  display: none;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.label-text {
+  color: var(--color-gray-700);
+  font: var(--font-text-sm-medium);
+}
+
+.label-hint {
+  color: var(--color-gray-700);
+  font: var(--font-text-sm-regular);
+}
+
+.fields-group {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+  flex: 1;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-gray-200);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.uploaded-logo {
+  max-height: 100px;
+  align-self: self-start;
+}
+
+.error {
+  display: block;
+  margin-top: 6px;
+  color: var(--color-error-500);
+  font: var(--font-text-sm-regular);
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .title {
+    margin-bottom: 0;
+  }
+
+  .main-divider {
+    display: flex;
+    margin-bottom: 32px;
+  }
+
+  .form-field {
+    display: flex;
+    gap: 32px;
+  }
+
+  .label {
+    max-width: 280px;
+    width: 100%;
+  }
+
+  .field {
+    max-width: 512px;
+    width: 100%;
+  }
+}
