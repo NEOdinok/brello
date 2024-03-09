@@ -1,6 +1,6 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
-export interface Database {
+export type Database = {
   graphql_public: {
     Tables: {
       [_ in never]: never;
@@ -28,7 +28,7 @@ export interface Database {
   };
   public: {
     Tables: {
-      boards: {
+      "boards ": {
         Row: {
           author_id: string;
           background_url: string | null;
@@ -41,7 +41,7 @@ export interface Database {
           workspace_id: string;
         };
         Insert: {
-          author_id: string;
+          author_id?: string;
           background_url?: string | null;
           color?: string | null;
           created_at?: string;
@@ -49,7 +49,7 @@ export interface Database {
           id?: string;
           name: string;
           visibility: number;
-          workspace_id: string;
+          workspace_id?: string;
         };
         Update: {
           author_id?: string;
@@ -64,52 +64,10 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: "boards_author_id_fkey";
+            foreignKeyName: "public_boards _author_id_fkey";
             columns: ["author_id"];
             isOneToOne: false;
             referencedRelation: "users";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "boards_workspace_id_fkey";
-            columns: ["workspace_id"];
-            isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
-        ];
-      };
-      lists: {
-        Row: {
-          board_id: string;
-          created_at: string;
-          deleted_at: string | null;
-          id: string;
-          name: string;
-          position: number | null;
-        };
-        Insert: {
-          board_id: string;
-          created_at?: string;
-          deleted_at?: string | null;
-          id?: string;
-          name: string;
-          position?: number | null;
-        };
-        Update: {
-          board_id?: string;
-          created_at?: string;
-          deleted_at?: string | null;
-          id?: string;
-          name?: string;
-          position?: number | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "lists_board_id_fkey";
-            columns: ["board_id"];
-            isOneToOne: false;
-            referencedRelation: "boards";
             referencedColumns: ["id"];
           },
         ];
@@ -117,35 +75,29 @@ export interface Database {
       profiles: {
         Row: {
           avatar_url: string | null;
-          created_at: string;
-          first_name: string;
+          first_name: string | null;
           id: string;
           last_name: string | null;
-          updated_at: string;
-          user_id: string;
+          updated_at: string | null;
         };
         Insert: {
           avatar_url?: string | null;
-          created_at?: string;
-          first_name: string;
-          id?: string;
+          first_name?: string | null;
+          id: string;
           last_name?: string | null;
-          updated_at?: string;
-          user_id: string;
+          updated_at?: string | null;
         };
         Update: {
           avatar_url?: string | null;
-          created_at?: string;
-          first_name?: string;
+          first_name?: string | null;
           id?: string;
           last_name?: string | null;
-          updated_at?: string;
-          user_id?: string;
+          updated_at?: string | null;
         };
         Relationships: [
           {
-            foreignKeyName: "profiles_user_id_fkey";
-            columns: ["user_id"];
+            foreignKeyName: "profiles_id_fkey";
+            columns: ["id"];
             isOneToOne: true;
             referencedRelation: "users";
             referencedColumns: ["id"];
@@ -182,7 +134,7 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: "workspaces_user_id_fkey";
+            foreignKeyName: "public_workspaces_user_id_fkey";
             columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "users";
@@ -383,7 +335,7 @@ export interface Database {
       [_ in never]: never;
     };
   };
-}
+};
 
 export type Tables<
   PublicTableNameOrOptions extends
