@@ -17,7 +17,13 @@ import { Button } from "../button";
 import { customScrollStyles } from "../custom-scroll";
 import { Textarea } from "../textarea";
 import styles from "./styles.module.css";
-import { $board, boardUpdate, type KanbanCard, type KanbanList } from "./model";
+import {
+  $board,
+  boardUpdate,
+  cardCreateClicked,
+  type KanbanCard,
+  type KanbanList,
+} from "./model";
 
 function listReorder(
   list: KanbanList,
@@ -78,18 +84,7 @@ function cardMove(
 
 export function KanbanBoard() {
   const [board, setBoard] = useUnit([$board, boardUpdate]);
-
-  const onCreateCard = (card: KanbanCard, columnId: string) => {
-    const updatedBoard = board.map((column) => {
-      if (column.id === columnId) {
-        return { ...column, cards: [...column.cards, card] };
-      }
-
-      return column;
-    });
-
-    setBoard(updatedBoard);
-  };
+  const [onCreateCard] = useUnit([cardCreateClicked]);
 
   const onColumnUpdate = (updatedList: KanbanList) => {
     const updatedBoard = board.map((column) =>
@@ -161,7 +156,7 @@ export function KanbanBoard() {
               onUpdate={onColumnUpdate}
             >
               <KanbanCreateCard
-                onCreate={(card) => onCreateCard(card, column.id)}
+                onCreate={(card) => onCreateCard({ card, columnId: column.id })}
               />
             </KanbanColumn>
           ))}

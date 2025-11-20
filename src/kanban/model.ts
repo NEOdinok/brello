@@ -96,7 +96,22 @@ export const mockBoard: KanbanList[] = [
 ];
 
 export const boardUpdate = createEvent<KanbanBoard>();
+export const cardCreateClicked = createEvent<{
+  card: KanbanCard;
+  columnId: string;
+}>();
 
 export const $board = createStore<KanbanBoard>(mockBoard);
 
 $board.on(boardUpdate, (_, board) => board);
+$board.on(cardCreateClicked, (board, { card, columnId }) => {
+  const updateBoard = board.map((column) => {
+    if (column.id === columnId) {
+      return { ...column, cards: [...column.cards, card] };
+    }
+
+    return column;
+  });
+
+  return updateBoard;
+});
