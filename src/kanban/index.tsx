@@ -11,7 +11,6 @@ import {
 import { ActionIcon, Group } from "@mantine/core";
 import { IconCheck, IconPencil, IconTrash, IconX } from "@tabler/icons-react";
 import cn from "clsx";
-import { nanoid } from "nanoid";
 
 import { Button } from "../button";
 import { customScrollStyles } from "../custom-scroll";
@@ -84,7 +83,6 @@ function cardMove(
 
 export function KanbanBoard() {
   const [board, setBoard] = useUnit([$board, boardUpdate]);
-  const [onCreateCard] = useUnit([cardCreateClicked]);
 
   const onColumnUpdate = (updatedList: KanbanList) => {
     const updatedBoard = board.map((column) =>
@@ -155,9 +153,7 @@ export function KanbanBoard() {
               cards={column.cards}
               onUpdate={onColumnUpdate}
             >
-              <KanbanCreateCard
-                onCreate={(card) => onCreateCard({ card, columnId: column.id })}
-              />
+              <KanbanCreateCard columnId={column.id} />
             </KanbanColumn>
           ))}
         </div>
@@ -298,11 +294,8 @@ function KanbanCard({
   );
 }
 
-function KanbanCreateCard({
-  onCreate,
-}: {
-  onCreate: (card: KanbanCard) => void;
-}) {
+function KanbanCreateCard({ columnId }: { columnId: string }) {
+  const [onCreateCard] = useUnit([cardCreateClicked]);
   const [title, setTitle] = useState("");
 
   const onReset = () => {
@@ -311,7 +304,7 @@ function KanbanCreateCard({
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onCreate({ id: nanoid(), title });
+    onCreateCard({ columnId, card: { title } });
     onReset();
   };
 

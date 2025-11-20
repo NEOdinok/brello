@@ -12,6 +12,8 @@ export type KanbanCard = {
   title: string;
 };
 
+export type KanbanNewCard = Pick<KanbanCard, "title">;
+
 export type KanbanBoard = KanbanList[];
 
 const taskNames = [
@@ -97,7 +99,7 @@ export const mockBoard: KanbanList[] = [
 
 export const boardUpdate = createEvent<KanbanBoard>();
 export const cardCreateClicked = createEvent<{
-  card: KanbanCard;
+  card: KanbanNewCard;
   columnId: string;
 }>();
 
@@ -107,7 +109,8 @@ $board.on(boardUpdate, (_, board) => board);
 $board.on(cardCreateClicked, (board, { card, columnId }) => {
   const updateBoard = board.map((column) => {
     if (column.id === columnId) {
-      return { ...column, cards: [...column.cards, card] };
+      const newCard = { ...card, id: nanoid() };
+      return { ...column, cards: [...column.cards, newCard] };
     }
 
     return column;
