@@ -28,7 +28,7 @@ other ecosystem.
 - **Frontend Framework:** React 19 with TypeScript 5.9
 - **Build Tool:** Vite 7.2 (fast HMR, optimized bundling)
 - **UI Components:** Mantine v8 (comprehensive component library)
-- **Styling:** Tailwind CSS v4 with design tokens (OKLCH color space, dark mode support)
+- **Styling:** Mantine CSS-in-JS with built-in theming (dark mode support)
 - **Rich Text:** TipTap v3 for headless rich text editing
 - **Icons:** @tabler/icons-react and lucide-react
 - **Package Manager:** pnpm (faster and more efficient than npm)
@@ -39,15 +39,15 @@ other ecosystem.
 1. **Component Library First:** Mantine provides polished components for modals, dropdowns, notifications, date pickers, and spotlight search. Avoid building basic components from scratch.
 
 2. **Styling Strategy:**
-   - Tailwind CSS for utility-first styling
-   - Mantine components come with built-in Mantine theme colors
-   - Global theme variables in `/src/index.css` (OKLCH colors, dark mode)
-   - Use the `cn()` utility from `/src/lib/utils.ts` to merge Tailwind classes intelligently
+   - Use Mantine's CSS-in-JS solution for component styling
+   - Mantine components have built-in theme colors and styling
+   - Customize styles via Mantine's `sx` prop or CSS modules
+   - Global theme configuration through Mantine Provider
 
 3. **Path Aliases:** Import from `@` instead of relative paths:
    ```typescript
-   import { cn } from '@/lib/utils'
    import { SomeComponent } from '@/components/SomeComponent'
+   import { someStore } from '@/model'
    ```
    This is configured in `vite.config.ts` and `tsconfig.app.json`.
 
@@ -63,27 +63,35 @@ src/
 ├── main.tsx              # React entry point (initializes Mantine providers)
 ├── App.tsx               # Root component
 ├── App.css               # Root component styles
-├── index.css             # Global styles, design system tokens, Tailwind config
-├── lib/
-│   └── utils.ts          # Utility functions (cn() for class merging)
+├── index.css             # Global styles and CSS variables
+├── model.ts              # Effector stores and events
 └── assets/               # Static assets
 ```
 
 ### Important Patterns
 
-**Class Name Merging:** When combining Tailwind classes (especially when overriding), use the `cn()` utility to prevent class conflicts:
+**Styling Components:** Use Mantine's styling approaches:
+- `sx` prop for inline styles with theme access
+- CSS modules for complex component styling
+- Mantine's `createStyles` hook for component-scoped styles
 
 ```typescript
-import { cn } from '@/lib/utils'
+import { Button } from '@mantine/core'
 
-export function Button({ className, ...props }) {
-  return <button className={cn("px-4 py-2 bg-blue-500", className)} {...props} />
+export function MyButton() {
+  return (
+    <Button
+      sx={{ backgroundColor: 'var(--mantine-color-blue-6)' }}
+    >
+      Click me
+    </Button>
+  )
 }
 ```
 
 **Mantine Components:** Prefer using Mantine components over building from scratch:
 - `Button`, `Input`, `Modal`, `Notification`, `Select`, `DatePicker` - all provided by Mantine
-- Mantine components integrate seamlessly with Tailwind CSS
+- Mantine components include built-in styling and theme support
 - Rich text editing: Use TipTap via `@mantine/tiptap` integration
 
 **React 19 Features:** The project uses React 19, which includes:
@@ -113,12 +121,12 @@ Run `pnpm lint` before committing to catch issues early.
 
 - **Testing:** No test framework configured yet. When needed, Vitest would be ideal (Vite-native)
 - **API/Backend:** This is a frontend-only setup. Backend integration will require HTTP client setup (consider `fetch` or `axios`)
-- **State Management:** No global state manager yet (React Context + hooks may suffice initially, but watch for complexity)
+- **Patronum:** Explore Patronum utilities for advanced Effector patterns and async operations
 
 ### Key Files & Their Purposes
 
 - `vite.config.ts` - Build configuration, path aliases
 - `tsconfig.app.json` - TypeScript compiler options (strict mode enabled)
-- `src/index.css` - Design tokens, global styles, Tailwind theme
-- `src/lib/utils.ts` - Helper functions (`cn()` for class merging)
+- `src/index.css` - Global styles and CSS variables
+- `src/model.ts` - Effector state management (stores, events, effects)
 - `src/main.tsx` - React app initialization with Mantine providers
