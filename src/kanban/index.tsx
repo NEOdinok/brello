@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { cardDeleteClicked, cardEditClicked, cardMoved } from "./model";
 
 import { useUnit } from "effector-react";
 import { containerStyles } from "../container";
@@ -16,126 +17,23 @@ import { Button } from "../button";
 import { customScrollStyles } from "../custom-scroll";
 import { Textarea } from "../textarea";
 import styles from "./styles.module.css";
-import {
-  $board,
-  boardUpdate,
-  cardCreateClicked,
-  type KanbanCard,
-  type KanbanList,
-} from "./model";
-
-function listReorder(
-  list: KanbanList,
-  startIndex: number,
-  endIndex: number
-): KanbanList {
-  const cards = Array.from(list.cards);
-  const [removed] = cards.splice(startIndex, 1);
-  cards.splice(endIndex, 0, removed);
-
-  return { ...list, cards };
-}
-
-function cardMove(
-  board: KanbanList[],
-  sourceColumnId: string,
-  destinationColumnId: string,
-  fromIndex: number,
-  toIndex: number
-): KanbanList[] {
-  const sourceColumnIndex = board.findIndex(
-    (column) => column.id === sourceColumnId
-  );
-  const destinationColumnIndex = board.findIndex(
-    (column) => column.id === destinationColumnId
-  );
-
-  const sourceColumn = board[sourceColumnIndex];
-  const destinationColumn = board[destinationColumnIndex];
-
-  const card = sourceColumn.cards[fromIndex];
-
-  const updatedSourceColumn = {
-    ...sourceColumn,
-    cards: sourceColumn.cards.filter((_, index) => index !== fromIndex),
-  };
-  const updatedDestinationColumn = {
-    ...destinationColumn,
-    cards: [
-      ...destinationColumn.cards.slice(0, toIndex),
-      { ...card },
-      ...destinationColumn.cards.slice(toIndex),
-    ],
-  };
-
-  return board.map((column) => {
-    if (column.id === sourceColumnId) {
-      return updatedSourceColumn;
-    }
-
-    if (column.id === destinationColumnId) {
-      return updatedDestinationColumn;
-    }
-
-    return column;
-  });
-}
+import { $board, cardCreateClicked, type KanbanCard } from "./model";
 
 export function KanbanBoard() {
-  const [board, setBoard] = useUnit([$board, boardUpdate]);
+  const [board, onCardMove] = useUnit([$board, cardMoved]);
 
-  const onColumnUpdate = (updatedList: KanbanList) => {
-    const updatedBoard = board.map((column) =>
-      column.id === updatedList.id ? updatedList : column
-    );
-    setBoard(updatedBoard);
-  };
-
-  const handleDragEnd = (result: DropResult) => {
-    const { source, destination } = result;
-
-    // card dropped outside droppable
+  const handleDragEnd = ({ source, destination }: DropResult) => {
     if (!destination) {
+      // Dropped outside droppable
       return;
     }
 
-    // card dropped same place
-    if (
-      source.droppableId === destination.droppableId &&
-      source.index === destination.index
-    ) {
-      return;
-    }
+    const fromColumnId = source.droppableId;
+    const toColumnId = destination.droppableId;
+    const fromIndex = source.index;
+    const toIndex = destination.index;
 
-    const sourceId = source.droppableId;
-    const destinationId = destination.droppableId;
-
-    const insideTheSameColumn = sourceId === destinationId;
-    if (insideTheSameColumn) {
-      // Перемещение внутри одной колонки
-      const column = board.find((column) => column.id === sourceId);
-      if (column) {
-        const reorderedList = listReorder(
-          column,
-          source.index,
-          destination.index
-        );
-        const updatedBoard = board.map((item) =>
-          item.id === sourceId ? reorderedList : item
-        );
-        setBoard(updatedBoard);
-      }
-    } else {
-      // Перемещение между колонками
-      const updatedBoard = cardMove(
-        board,
-        sourceId,
-        destinationId,
-        source.index,
-        destination.index
-      );
-      setBoard(updatedBoard);
-    }
+    onCardMove({ fromColumnId, toColumnId, fromIndex, toIndex });
   };
 
   return (
@@ -151,7 +49,6 @@ export function KanbanBoard() {
               id={column.id}
               title={column.title}
               cards={column.cards}
-              onUpdate={onColumnUpdate}
             >
               <KanbanCreateCard columnId={column.id} />
             </KanbanColumn>
@@ -167,26 +64,12 @@ function KanbanColumn({
   id,
   cards,
   children,
-  onUpdate,
 }: {
   title: string;
   id: string;
   cards: KanbanCard[];
   children?: React.ReactNode;
-  onUpdate: (updatedList: KanbanList) => void;
 }) {
-  const onCardEdit = (updatedCard: KanbanCard) => {
-    const updatedCards = cards.map((card) =>
-      card.id === updatedCard.id ? updatedCard : card
-    );
-    onUpdate({ id, title, cards: updatedCards });
-  };
-
-  const onCardDelete = (cardId: string) => {
-    const updatedCards = cards.filter((card) => card.id !== cardId);
-    onUpdate({ id, title, cards: updatedCards });
-  };
-
   return (
     <Droppable droppableId={id}>
       {(provided) => (
@@ -203,8 +86,7 @@ function KanbanColumn({
                 id={cardId}
                 index={index}
                 title={cardTitle}
-                onEdit={onCardEdit}
-                onDelete={() => onCardDelete(cardId)}
+                columnId={id}
               />
             ))}
             {provided.placeholder}
@@ -220,26 +102,36 @@ function KanbanCard({
   id,
   index,
   title,
-  onEdit,
-  onDelete,
+  columnId,
 }: {
   id: string;
   index: number;
   title: string;
-  onEdit: (card: KanbanCard) => void;
-  onDelete: () => void;
+  columnId: string;
 }) {
+  const [onCardEdit, onCardDelete] = useUnit([
+    cardEditClicked,
+    cardDeleteClicked,
+  ]);
   const [editTitle, setEditTitle] = useState(title);
   const [editMode, setEditMode] = useState(false);
 
-  const onReset = () => {
-    setEditTitle(title);
+  const onCancel = () => {
     setEditMode(false);
   };
 
+  const startEdit = () => {
+    setEditTitle(title);
+    setEditMode(true);
+  };
+
   const onEditFinished = () => {
-    onEdit({ id, title: editTitle });
-    onReset();
+    onCardEdit({ columnId, cardId: id, card: { title: editTitle } });
+    setEditMode(false);
+  };
+
+  const onDelete = () => {
+    onCardDelete({ columnId, cardId: id });
   };
 
   if (editMode) {
@@ -250,7 +142,7 @@ function KanbanCard({
           <ActionIcon onClick={onEditFinished}>
             <IconCheck size={14} />
           </ActionIcon>
-          <ActionIcon onClick={onReset}>
+          <ActionIcon onClick={onCancel}>
             <IconX size={14} />
           </ActionIcon>
         </Group>
@@ -280,7 +172,7 @@ function KanbanCard({
           >
             <p className={styles.itemText}>{title}</p>
             <Group gap="xs">
-              <ActionIcon onClick={() => setEditMode(true)}>
+              <ActionIcon onClick={() => startEdit()}>
                 <IconPencil size={14} />
               </ActionIcon>
               <ActionIcon onClick={() => onDelete()}>
