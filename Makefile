@@ -31,3 +31,7 @@ db.migrations.diff.local:
 db.types.generate:
 	pnpm supabase gen types typescript --local > ./src/shared/api/database.types.ts
 	pnpm prettier --write ./src/shared/api/database.types.ts
+
+db.migrations.apply:
+  pnpm supabase migration up --local
+
