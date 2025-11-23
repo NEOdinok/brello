@@ -9,15 +9,38 @@ export default defineConfig([
   globalIgnores(['dist']),
   {
     files: ['**/*.{ts,tsx}'],
+
     extends: [
       js.configs.recommended,
-      tseslint.configs.recommended,
+      ...tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
     ],
+
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+
+    rules: {
+      // turn off the base rule so TS version is the source of truth
+      'no-unused-vars': 'off',
+
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          // like in the tutorial
+          argsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          // extra: also ignore plain `_` vars if you want
+          varsIgnorePattern: '^_',
+        },
+      ],
     },
   },
 ])

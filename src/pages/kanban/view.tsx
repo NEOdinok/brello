@@ -1,26 +1,34 @@
 import { useState } from "react";
-import { cardDeleteClicked, cardEditClicked, cardMoved } from "./model";
+import {
+  cardDeleteClicked,
+  cardEditClicked,
+  cardMoved,
+  PageGate,
+  $cardsPendingMap,
+} from "./model";
 
-import { useUnit } from "effector-react";
-import { containerStyles } from "../container";
+import { useGate, useUnit, useStoreMap } from "effector-react";
+import { containerStyles } from "../../container";
 import {
   DragDropContext,
   Draggable,
   Droppable,
   type DropResult,
 } from "@hello-pangea/dnd";
-import { ActionIcon, Group } from "@mantine/core";
+import { ActionIcon, Group, Loader } from "@mantine/core";
 import { IconCheck, IconPencil, IconTrash, IconX } from "@tabler/icons-react";
 import cn from "clsx";
 
-import { Button } from "../button";
-import { customScrollStyles } from "../custom-scroll";
-import { Textarea } from "../textarea";
+import { Button } from "../../button";
+import { customScrollStyles } from "../../custom-scroll";
+import { Textarea } from "../../textarea";
 import styles from "./styles.module.css";
 import { $board, cardCreateClicked, type KanbanCard } from "./model";
 
 export function KanbanBoard() {
   const [board, onCardMove] = useUnit([$board, cardMoved]);
+
+  useGate(PageGate);
 
   const handleDragEnd = ({ source, destination }: DropResult) => {
     if (!destination) {
@@ -28,12 +36,12 @@ export function KanbanBoard() {
       return;
     }
 
-    const fromColumnId = source.droppableId;
-    const toColumnId = destination.droppableId;
+    const fromListId = source.droppableId;
+    const toListId = destination.droppableId;
     const fromIndex = source.index;
     const toIndex = destination.index;
 
-    onCardMove({ fromColumnId, toColumnId, fromIndex, toIndex });
+    onCardMove({ fromListId, toListId, fromIndex, toIndex });
   };
 
   return (
@@ -43,14 +51,14 @@ export function KanbanBoard() {
       </header>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className={cn(styles.board, customScrollStyles)}>
-          {board.map((column) => (
+          {board.map((list) => (
             <KanbanColumn
-              key={column.id}
-              id={column.id}
-              title={column.title}
-              cards={column.cards}
+              key={list.id}
+              id={list.id}
+              title={list.title}
+              cards={list.cards}
             >
-              <KanbanCreateCard columnId={column.id} />
+              <KanbanCreateCard listId={list.id} />
             </KanbanColumn>
           ))}
         </div>
@@ -86,7 +94,7 @@ function KanbanColumn({
                 id={cardId}
                 index={index}
                 title={cardTitle}
-                columnId={id}
+                listId={id}
               />
             ))}
             {provided.placeholder}
@@ -102,12 +110,12 @@ function KanbanCard({
   id,
   index,
   title,
-  columnId,
+  listId,
 }: {
   id: string;
   index: number;
   title: string;
-  columnId: string;
+  listId: string;
 }) {
   const [onCardEdit, onCardDelete] = useUnit([
     cardEditClicked,
@@ -115,6 +123,11 @@ function KanbanCard({
   ]);
   const [editTitle, setEditTitle] = useState(title);
   const [editMode, setEditMode] = useState(false);
+  const disabled = useStoreMap({
+    store: $cardsPendingMap,
+    keys: [id],
+    fn: (pendingMap, [cardId]) => pendingMap[cardId] ?? false,
+  });
 
   const onCancel = () => {
     setEditMode(false);
@@ -126,17 +139,17 @@ function KanbanCard({
   };
 
   const onEditFinished = () => {
-    onCardEdit({ columnId, cardId: id, card: { title: editTitle } });
+    onCardEdit({ listId, cardId: id, card: { title: editTitle } });
     setEditMode(false);
   };
 
   const onDelete = () => {
-    onCardDelete({ columnId, cardId: id });
+    onCardDelete({ listId, cardId: id });
   };
 
   if (editMode) {
     return (
-      <div className={styles.item}>
+      <div className={styles.kanbanCard}>
         <Textarea value={editTitle} onValue={setEditTitle} />
         <Group gap="xs" mt="sm">
           <ActionIcon onClick={onEditFinished}>
@@ -158,35 +171,30 @@ function KanbanCard({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           className={cn(
-            styles.item,
+            styles.kanbanCard,
+            disabled && styles.disabled,
             snapshot.isDragging ? styles.dragging : null
           )}
         >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
-            <p className={styles.itemText}>{title}</p>
-            <Group gap="xs">
-              <ActionIcon onClick={() => startEdit()}>
-                <IconPencil size={14} />
-              </ActionIcon>
-              <ActionIcon onClick={() => onDelete()}>
-                <IconTrash size={14} />
-              </ActionIcon>
-            </Group>
-          </div>
+          <p className={styles.kanbanCardText}>{title}</p>
+          <Group hidden={!disabled}>
+            <Loader size="sm" />
+          </Group>
+          <Group hidden={disabled}>
+            <ActionIcon onClick={() => setEditMode(true)}>
+              <IconPencil size={14} />
+            </ActionIcon>
+            <ActionIcon onClick={onDelete}>
+              <IconTrash size={14} />
+            </ActionIcon>
+          </Group>
         </div>
       )}
     </Draggable>
   );
 }
 
-function KanbanCreateCard({ columnId }: { columnId: string }) {
+function KanbanCreateCard({ listId }: { listId: string }) {
   const [onCreateCard] = useUnit([cardCreateClicked]);
   const [title, setTitle] = useState("");
 
@@ -196,7 +204,7 @@ function KanbanCreateCard({ columnId }: { columnId: string }) {
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onCreateCard({ columnId, card: { title } });
+    onCreateCard({ listId, card: { title } });
     onReset();
   };
 
