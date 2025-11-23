@@ -15,6 +15,7 @@ import {
   Droppable,
   type DropResult,
 } from "@hello-pangea/dnd";
+import { useDisclosure } from "@mantine/hooks";
 import { ActionIcon, Group, Loader } from "@mantine/core";
 import { IconCheck, IconPencil, IconTrash, IconX } from "@tabler/icons-react";
 import cn from "clsx";
@@ -106,6 +107,42 @@ function KanbanColumn({
   );
 }
 
+interface KanbanEditCardProps {
+  cardId: string;
+  listId: string;
+  title: string;
+  onFinished: () => void;
+}
+
+function KanbanEditCard({
+  cardId,
+  listId,
+  title,
+  onFinished,
+}: KanbanEditCardProps) {
+  const [onCardEdit] = useUnit([cardEditClicked]);
+  const [editTitle, setEditTitle] = useState(title);
+
+  function onEditFinished() {
+    onCardEdit({ listId, cardId, card: { title: editTitle } });
+    onFinished();
+  }
+
+  return (
+    <div className={styles.kanbanCard}>
+      <Textarea value={editTitle} onValue={setEditTitle} />
+      <Group gap="xs" mt="sm">
+        <ActionIcon onClick={onEditFinished}>
+          <IconCheck size={14} />
+        </ActionIcon>
+        <ActionIcon onClick={onFinished}>
+          <IconX size={14} />
+        </ActionIcon>
+      </Group>
+    </div>
+  );
+}
+
 function KanbanCard({
   id,
   index,
@@ -117,31 +154,14 @@ function KanbanCard({
   title: string;
   listId: string;
 }) {
-  const [onCardEdit, onCardDelete] = useUnit([
-    cardEditClicked,
-    cardDeleteClicked,
-  ]);
-  const [editTitle, setEditTitle] = useState(title);
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, editHandlers] = useDisclosure(false);
+
+  const [onCardDelete] = useUnit([cardDeleteClicked]);
   const disabled = useStoreMap({
     store: $cardsPendingMap,
     keys: [id],
     fn: (pendingMap, [cardId]) => pendingMap[cardId] ?? false,
   });
-
-  const onCancel = () => {
-    setEditMode(false);
-  };
-
-  const startEdit = () => {
-    setEditTitle(title);
-    setEditMode(true);
-  };
-
-  const onEditFinished = () => {
-    onCardEdit({ listId, cardId: id, card: { title: editTitle } });
-    setEditMode(false);
-  };
 
   const onDelete = () => {
     onCardDelete({ listId, cardId: id });
@@ -149,17 +169,12 @@ function KanbanCard({
 
   if (editMode) {
     return (
-      <div className={styles.kanbanCard}>
-        <Textarea value={editTitle} onValue={setEditTitle} />
-        <Group gap="xs" mt="sm">
-          <ActionIcon onClick={onEditFinished}>
-            <IconCheck size={14} />
-          </ActionIcon>
-          <ActionIcon onClick={onCancel}>
-            <IconX size={14} />
-          </ActionIcon>
-        </Group>
-      </div>
+      <KanbanEditCard
+        cardId={id}
+        listId={listId}
+        title={title}
+        onFinished={editHandlers.close}
+      />
     );
   }
 
@@ -181,7 +196,7 @@ function KanbanCard({
             <Loader size="sm" />
           </Group>
           <Group hidden={disabled}>
-            <ActionIcon onClick={() => setEditMode(true)}>
+            <ActionIcon onClick={editHandlers.open}>
               <IconPencil size={14} />
             </ActionIcon>
             <ActionIcon onClick={onDelete}>
